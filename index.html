@@ -1,0 +1,2369 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>말랑이의 말하기 탐험대 | 다정한 선생님 AI 인터뷰 & 5단계 발표 체계</title>
+  <!-- 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- 폭죽 애니메이션 -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #FFB300;
+      --primary-light: #FFF9E6;
+      --secondary: #4CAF50;
+      --secondary-light: #E8F5E9;
+      --accent: #FF5722;
+      --sky: #03A9F4;
+      --purple: #7E57C2;
+      --text-main: #2C3E50;
+      --text-muted: #607D8B;
+      --card-bg: #FFFFFF;
+      --border-radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans KR', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: linear-gradient(135deg, #FFFDE7 0%, #E0F2F1 50%, #EDE7F6 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 16px;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 580px;
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border: 4px solid #FFE082;
+      margin-bottom: 30px;
+    }
+
+    /* 헤더 */
+    header {
+      background: linear-gradient(135deg, #FFD54F, #FFB300);
+      padding: 22px 20px 18px;
+      text-align: center;
+      position: relative;
+    }
+
+    .header-mascot {
+      font-size: 44px;
+      display: inline-block;
+      animation: bounce 2s infinite ease-in-out;
+    }
+
+    h1 {
+      font-family: 'Jua', sans-serif;
+      font-size: 26px;
+      color: #4E342E;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #6D4C41;
+      font-weight: 600;
+      margin-top: 3px;
+    }
+
+    /* 레벨 선택기 */
+    .level-selector-wrapper {
+      background: #FFF8E1;
+      border-bottom: 2px solid #FFE082;
+      padding: 12px 14px 10px;
+    }
+
+    .level-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .level-header-title {
+      font-family: 'Jua', sans-serif;
+      font-size: 14px;
+      color: #6D4C41;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .curriculum-link-btn {
+      background: #FFFFFF;
+      border: 1.5px solid #FFA000;
+      color: #E65100;
+      font-family: 'Jua', sans-serif;
+      font-size: 12.5px;
+      padding: 4px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 6px rgba(255, 160, 0, 0.15);
+      transition: all 0.2s;
+    }
+
+    .curriculum-link-btn:hover {
+      background: #FFF3E0;
+      transform: translateY(-1px);
+    }
+
+    .level-pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .level-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .level-pill {
+      flex: 0 0 auto;
+      padding: 6px 12px;
+      border-radius: 16px;
+      border: 2px solid #FFE082;
+      background: #FFFFFF;
+      font-family: 'Jua', sans-serif;
+      font-size: 13px;
+      color: #795548;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 90px;
+    }
+
+    .level-pill .stage-name {
+      font-size: 11px;
+      color: #A1887F;
+    }
+
+    .level-pill.active {
+      background: #FFA000;
+      border-color: #FF8F00;
+      color: #FFFFFF;
+      box-shadow: 0 3px 8px rgba(255, 160, 0, 0.35);
+    }
+    .level-pill.active .stage-name {
+      color: #FFF8E1;
+    }
+
+    /* 탭 네비게이션: 발표 / AI인터뷰 / 주제리스트 / 스티커 / 보관함 */
+    .tab-bar {
+      display: flex;
+      background: #FAFAFA;
+      padding: 6px;
+      gap: 4px;
+      border-bottom: 1px solid #EEEEEE;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px 2px;
+      font-family: 'Jua', sans-serif;
+      font-size: 13.5px;
+      border: none;
+      background: transparent;
+      color: #757575;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      background: #FFFFFF;
+      color: #E65100;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+    }
+
+    /* 컨텐츠 영역 */
+    .content-area {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .view-section {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .view-section.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* 공통 카드 */
+    .fun-card {
+      background: #FFFFFF;
+      border: 2.5px solid #E0E0E0;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+      position: relative;
+    }
+
+    /* AI 인터뷰 배너 */
+    .ai-interview-banner {
+      background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+      border: 2px dashed #FF9800;
+      border-radius: 18px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .ai-interview-banner:hover {
+      transform: translateY(-2px);
+    }
+    .ai-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ai-banner-mascot {
+      font-size: 30px;
+    }
+    .ai-banner-text h4 {
+      font-family: 'Jua', sans-serif;
+      font-size: 15px;
+      color: #E65100;
+    }
+    .ai-banner-text p {
+      font-size: 12px;
+      color: #8D6E63;
+    }
+    .ai-banner-btn {
+      background: #FF9800;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 14px;
+      font-family: 'Jua', sans-serif;
+      font-size: 12.5px;
+      white-space: nowrap;
+    }
+
+    /* 교육부 기준 실시간 뱃지 바 */
+    .standards-badge-bar {
+      background: #E8F5E9;
+      border: 1.5px solid #A5D6A7;
+      border-radius: 14px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .standards-icon {
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .standards-info {
+      flex: 1;
+    }
+
+    .standards-code {
+      font-family: 'Jua', sans-serif;
+      font-size: 13px;
+      color: #2E7D32;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .standards-desc {
+      font-size: 12px;
+      color: #388E3C;
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    /* 1단계: 주제 카드 */
+    .topic-card {
+      background: var(--primary-light);
+      border-color: #FFD54F;
+      text-align: center;
+      padding: 22px 18px;
+    }
+
+    .topic-source-tag {
+      display: inline-block;
+      background: #FFF3E0;
+      color: #E65100;
+      border: 1px solid #FFB74D;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 12px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+    }
+
+    .badge-step {
+      display: inline-block;
+      background: #FFA000;
+      color: white;
+      font-family: 'Jua', sans-serif;
+      font-size: 13px;
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+
+    .topic-question {
+      font-family: 'Jua', sans-serif;
+      font-size: 21px;
+      color: #37474F;
+      line-height: 1.45;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: keep-all;
+    }
+
+    .topic-action-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-shuffle {
+      background: #FFFFFF;
+      color: #E65100;
+      border: 2px solid #FFB300;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-family: 'Jua', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.1s, background 0.2s;
+    }
+
+    .btn-shuffle:active {
+      transform: scale(0.96);
+      background: #FFF3E0;
+    }
+
+    .btn-view-list {
+      background: #FFF8E1;
+      color: #8D6E63;
+      border: 1.5px solid #D7CCC8;
+      padding: 8px 14px;
+      border-radius: 25px;
+      font-family: 'Jua', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* 2단계: 생각 정리 가이드 */
+    .guide-box {
+      background: #F3E5F5;
+      border-color: #CE93D8;
+    }
+
+    .guide-title {
+      font-family: 'Jua', sans-serif;
+      font-size: 16px;
+      color: #6A1B9A;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .guide-framework-name {
+      font-size: 12px;
+      background: #E1BEE7;
+      color: #4A148C;
+      padding: 2px 8px;
+      border-radius: 8px;
+    }
+
+    .guide-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .guide-step-item {
+      background: white;
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border-left: 5px solid #BA68C8;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    }
+
+    .step-tag {
+      background: #F3E5F5;
+      color: #6A1B9A;
+      font-family: 'Jua', sans-serif;
+      font-size: 12px;
+      padding: 2px 7px;
+      border-radius: 6px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+
+    .step-hint {
+      font-size: 13.5px;
+      color: #37474F;
+      line-height: 1.4;
+    }
+
+    .step-example {
+      color: #78909C;
+      font-size: 11.5px;
+      margin-top: 2px;
+      line-height: 1.35;
+    }
+
+    /* 3단계: 녹음 */
+    .record-card {
+      background: #E1F5FE;
+      border-color: #81D4FA;
+      text-align: center;
+      padding: 22px 18px;
+    }
+
+    .timer-display {
+      font-family: 'Jua', sans-serif;
+      font-size: 36px;
+      color: #0277BD;
+      margin-bottom: 10px;
+    }
+
+    .record-btn-wrapper {
+      position: relative;
+      display: inline-block;
+      margin: 8px 0;
+    }
+
+    .record-btn {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #FF5252, #D32F2F);
+      color: white;
+      font-size: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(244, 67, 54, 0.35);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .record-btn.recording {
+      background: linear-gradient(135deg, #424242, #212121);
+      animation: pulse 1.2s infinite;
+    }
+
+    .record-btn:active {
+      transform: scale(0.94);
+    }
+
+    .status-msg {
+      font-family: 'Jua', sans-serif;
+      font-size: 15px;
+      color: #01579B;
+      margin-top: 10px;
+      min-height: 24px;
+    }
+
+    .playback-box {
+      margin-top: 16px;
+      padding: 14px;
+      background: #FFFFFF;
+      border-radius: 16px;
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      border: 2px dashed #4FC3F7;
+    }
+
+    .playback-box.show {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    audio {
+      width: 100%;
+      height: 40px;
+      border-radius: 20px;
+    }
+
+    .save-btn {
+      background: linear-gradient(135deg, #66BB6A, #43A047);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-family: 'Jua', sans-serif;
+      font-size: 17px;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(76, 175, 80, 0.3);
+      transition: transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* ------------------------------------------- */
+    /* AI 인터뷰 (자연스러운 단일 여성 선생님 모드) 전용 스타일 */
+    /* ------------------------------------------- */
+    .interview-chat-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .interview-mascot-box {
+      background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+      border: 2.5px solid #FFB74D;
+      border-radius: 20px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .interview-mascot-avatar {
+      font-size: 46px;
+      animation: bounce 2s infinite ease-in-out;
+    }
+
+    .interview-intro-text {
+      flex: 1;
+    }
+
+    .interview-intro-text h3 {
+      font-family: 'Jua', sans-serif;
+      font-size: 17px;
+      color: #BF360C;
+    }
+    .interview-intro-text p {
+      font-size: 12.5px;
+      color: #8D6E63;
+      margin-top: 2px;
+    }
+
+    /* 채팅창 영역 */
+    .chat-messages-box {
+      background: #FFFDE7;
+      border: 2px solid #FFF176;
+      border-radius: 20px;
+      padding: 16px;
+      min-height: 280px;
+      max-height: 380px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .chat-bubble {
+      max-width: 86%;
+      padding: 13px 16px;
+      border-radius: 18px;
+      font-size: 14.5px;
+      line-height: 1.55;
+      animation: fadeIn 0.25s ease;
+      position: relative;
+      word-break: keep-all;
+    }
+
+    .chat-bubble.ai {
+      align-self: flex-start;
+      background: #FFFFFF;
+      color: #3E2723;
+      border: 2px solid #FFD54F;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+    }
+    .chat-bubble.ai .sender-name {
+      font-family: 'Jua', sans-serif;
+      font-size: 12px;
+      color: #E65100;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .chat-bubble.user {
+      align-self: flex-end;
+      background: #FFA000;
+      color: #FFFFFF;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 3px 8px rgba(255, 160, 0, 0.25);
+    }
+
+    /* 음성 말하기 & 입력 컨트롤러 */
+    .chat-controls-box {
+      background: #FFFFFF;
+      border: 2.5px solid #E0E0E0;
+      border-radius: 20px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .voice-talk-btn {
+      background: linear-gradient(135deg, #42A5F5, #1E88E5);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-family: 'Jua', sans-serif;
+      font-size: 17px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+      transition: all 0.2s;
+    }
+    .voice-talk-btn.listening {
+      background: linear-gradient(135deg, #FF5252, #E53935);
+      animation: pulse 1.2s infinite;
+    }
+
+    .text-input-row {
+      display: flex;
+      gap: 8px;
+    }
+    .chat-text-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1.5px solid #CFD8DC;
+      border-radius: 14px;
+      font-size: 13.5px;
+      outline: none;
+    }
+    .chat-text-input:focus {
+      border-color: #FFA000;
+    }
+    .chat-send-btn {
+      background: #5D4037;
+      color: white;
+      border: none;
+      padding: 0 16px;
+      border-radius: 14px;
+      font-family: 'Jua', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* 인터뷰 완성 결과 카드 */
+    .assembled-script-card {
+      background: #E8F5E9;
+      border: 2.5px solid #81C784;
+      border-radius: 20px;
+      padding: 18px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      animation: fadeIn 0.3s ease;
+    }
+    .assembled-script-card.show {
+      display: flex;
+    }
+    .assembled-header {
+      font-family: 'Jua', sans-serif;
+      font-size: 17px;
+      color: #1B5E20;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .assembled-text-box {
+      background: #FFFFFF;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #2E7D32;
+      border: 1.5px solid #A5D6A7;
+    }
+
+    /* ------------------------------------------- */
+    /* 주제 리스트 & 달성 여부 (Checklist) 화면 */
+    /* ------------------------------------------- */
+    .progress-summary-box {
+      background: linear-gradient(135deg, #FFF8E1, #FFECB3);
+      border: 2px solid #FFE082;
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .progress-title {
+      font-family: 'Jua', sans-serif;
+      font-size: 16px;
+      color: #6D4C41;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .progress-score {
+      font-family: 'Jua', sans-serif;
+      font-size: 16px;
+      color: #E65100;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      background: #FFFFFF;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #FFE082;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FFA000, #4CAF50);
+      width: 0%;
+      border-radius: 10px;
+      transition: width 0.4s ease;
+    }
+
+    /* 학기별 필터 태그 */
+    .filter-tags-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+    .filter-tags-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-tag-btn {
+      flex: 0 0 auto;
+      padding: 4px 10px;
+      border-radius: 12px;
+      border: 1px solid #BDBDBD;
+      background: #FFFFFF;
+      font-size: 12px;
+      color: #616161;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+
+    .filter-tag-btn.active {
+      background: #5D4037;
+      color: #FFFFFF;
+      border-color: #5D4037;
+    }
+
+    .topic-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .topic-item-card {
+      background: #FFFFFF;
+      border: 2px solid #E0E0E0;
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .topic-item-card.completed {
+      border-color: #A5D6A7;
+      background: #F1F8E9;
+    }
+
+    .topic-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .topic-curriculum-source {
+      font-size: 11.5px;
+      font-weight: 600;
+      background: #E8EAF6;
+      color: #283593;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .topic-status-badge {
+      font-family: 'Jua', sans-serif;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .topic-status-badge.done {
+      color: #2E7D32;
+    }
+    .topic-status-badge.pending {
+      color: #9E9E9E;
+    }
+
+    .topic-item-title {
+      font-family: 'Jua', sans-serif;
+      font-size: 15.5px;
+      color: #37474F;
+      line-height: 1.4;
+    }
+
+    .topic-item-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      padding-top: 8px;
+      border-top: 1px dashed #E0E0E0;
+    }
+
+    .btn-start-topic {
+      background: #FFA000;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-family: 'Jua', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s;
+    }
+    .btn-start-topic:hover {
+      background: #FF8F00;
+    }
+
+    .topic-completed-date {
+      font-size: 11px;
+      color: #689F38;
+      font-weight: 600;
+    }
+
+    /* 스티커 판 */
+    .stickers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .sticker-slot {
+      background: #FFFDE7;
+      border: 2px dashed #FDD835;
+      border-radius: 18px;
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .sticker-slot.unlocked {
+      background: #FFFFFF;
+      border: 2px solid #FFD54F;
+      box-shadow: 0 4px 10px rgba(255, 179, 0, 0.15);
+    }
+
+    .sticker-icon {
+      font-size: 36px;
+      filter: grayscale(100%);
+      opacity: 0.3;
+    }
+
+    .sticker-slot.unlocked .sticker-icon {
+      filter: none;
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .sticker-name {
+      font-family: 'Jua', sans-serif;
+      font-size: 12px;
+      color: #6D4C41;
+      margin-top: 4px;
+    }
+
+    /* 보관함 */
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .history-card {
+      background: white;
+      border-radius: 16px;
+      padding: 14px;
+      border: 2px solid #E0E0E0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .history-date {
+      font-size: 11.5px;
+      color: #9E9E9E;
+      font-weight: 600;
+    }
+
+    .history-level {
+      font-family: 'Jua', sans-serif;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 8px;
+      background: #E0F2F1;
+      color: #00796B;
+    }
+
+    .history-topic {
+      font-family: 'Jua', sans-serif;
+      font-size: 15px;
+      color: #37474F;
+    }
+
+    /* 모달 */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .modal-content {
+      background: #FFFFFF;
+      width: 100%;
+      max-width: 560px;
+      max-height: 88vh;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 4px solid #FFE082;
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, #FFD54F, #FFB300);
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-family: 'Jua', sans-serif;
+      font-size: 19px;
+      color: #4E342E;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .modal-close-btn {
+      background: white;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 16px;
+      color: #6D4C41;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .modal-body {
+      padding: 18px 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .roadmap-card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      border: 2px solid #E0E0E0;
+      padding: 15px;
+    }
+
+    .roadmap-card.current {
+      border-color: #FFA000;
+      box-shadow: 0 4px 14px rgba(255, 160, 0, 0.15);
+      background: #FFFDE7;
+    }
+
+    .roadmap-badge-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .roadmap-level-tag {
+      font-family: 'Jua', sans-serif;
+      font-size: 14px;
+      padding: 2px 10px;
+      border-radius: 10px;
+      background: #FFECB3;
+      color: #E65100;
+    }
+
+    .roadmap-grade {
+      font-size: 12px;
+      color: #78909C;
+      font-weight: 600;
+    }
+
+    .roadmap-std-code {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 11px;
+      background: #E8F5E9;
+      color: #2E7D32;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    .roadmap-desc {
+      font-size: 12.5px;
+      color: #546E7A;
+      line-height: 1.45;
+      margin-bottom: 6px;
+    }
+
+    .roadmap-coaching {
+      background: #F5F5F5;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #616161;
+      border-left: 3px solid #78909C;
+      margin-top: 4px;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); }
+      70% { transform: scale(1.08); box-shadow: 0 0 0 16px rgba(244, 67, 54, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- 헤더 -->
+    <header>
+      <div class="header-mascot">🐿️</div>
+      <h1>말랑이의 말하기 탐험대</h1>
+      <p class="subtitle">다정한 선생님 AI 인터뷰 & 5단계 생각 스피치 체계</p>
+    </header>
+
+    <!-- 5단계 레벨 선택기 -->
+    <div class="level-selector-wrapper">
+      <div class="level-header">
+        <span class="level-header-title">
+          <span>🎯</span> 성장 단계 선택
+        </span>
+        <button class="curriculum-link-btn" onclick="openCurriculumModal()">
+          <span>📖</span> 교육과정 기준표 보기
+        </button>
+      </div>
+
+      <div class="level-pills" id="levelPills">
+        <!-- JS로 레벨 버튼 렌더링 -->
+      </div>
+    </div>
+
+    <!-- 탭 네비게이션: 발표 / AI인터뷰 / 주제 미션 리스트 / 스티커 / 보관함 -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('practice')">
+        <span>🎤</span> 오늘의 발표
+      </button>
+      <button class="tab-btn" onclick="switchTab('interview')">
+        <span>💬</span> AI 인터뷰
+      </button>
+      <button class="tab-btn" onclick="switchTab('checklist')">
+        <span>📋</span> 주제 리스트
+      </button>
+      <button class="tab-btn" onclick="switchTab('stickers')">
+        <span>⭐</span> 스티커 판
+      </button>
+      <button class="tab-btn" onclick="switchTab('history')">
+        <span>📻</span> 보관함
+      </button>
+    </div>
+
+    <!-- 컨텐츠 영역 -->
+    <div class="content-area">
+
+      <!-- 1. 오늘의 발표 화면 -->
+      <div id="tab-practice" class="view-section active">
+
+        <!-- AI 인터뷰 징검다리 배너 (생각 정리가 어려울 때) -->
+        <div class="ai-interview-banner" onclick="startInterviewForCurrentTopic()">
+          <div class="ai-banner-left">
+            <span class="ai-banner-mascot">🐿️</span>
+            <div class="ai-banner-text">
+              <h4>생각 정리가 어렵다면? 선생님과 먼저 이야기해요</h4>
+              <p>다정한 말랑이 선생님과 3번만 이야기하면 발표 준비 끝!</p>
+            </div>
+          </div>
+          <button class="ai-banner-btn">인터뷰 시작 ❯</button>
+        </div>
+
+        <!-- 현재 레벨의 교육부 성취기준 요약 뱃지 -->
+        <div class="standards-badge-bar" onclick="openCurriculumModal()" style="cursor: pointer;" title="클릭하면 교육과정 기준표를 자세히 볼 수 있습니다">
+          <div class="standards-icon">🏫</div>
+          <div class="standards-info">
+            <div class="standards-code" id="stdBadgeCode">[2국01-05] 초1~2 기초</div>
+            <div class="standards-desc" id="stdBadgeDesc">주변 사람들에게 자신 있게 말하며 자신의 생각과 느낌을 표현한다.</div>
+          </div>
+          <span style="font-size: 11px; color:#2E7D32; font-family:'Jua',sans-serif; align-self:center;">기준표 ❯</span>
+        </div>
+
+        <!-- 1단계: 오늘의 주제 카드 -->
+        <div class="fun-card topic-card">
+          <div class="topic-source-tag" id="topicSourceTag">📗 초2-1 국어 10단원 수록 제재</div>
+          <div class="badge-step" id="topicStepBadge">1단계: 오늘의 공식 발표 주제</div>
+          <div class="topic-question" id="topicText">내가 가장 좋아하는 간식은 무엇이고 왜 좋아하나요?</div>
+
+          <div class="topic-action-bar">
+            <button class="btn-shuffle" onclick="shuffleTopic()">
+              <span>🎲</span> 다른 주제 뽑기
+            </button>
+            <button class="btn-view-list" onclick="switchTab('checklist')">
+              <span>📋</span> 전체 주제 목록 보기
+            </button>
+          </div>
+        </div>
+
+        <!-- 2단계: 생각 정리 가이드 (레벨별 동적 프레임워크) -->
+        <div class="fun-card guide-box">
+          <div class="guide-title">
+            <span id="guideTitleMain">🥪 생각 정리 힌트</span>
+            <span class="guide-framework-name" id="guideFrameworkName">감정 샌드위치 기법</span>
+          </div>
+          <div class="guide-steps" id="guideStepsList">
+            <!-- JS 렌더링 -->
+          </div>
+        </div>
+
+        <!-- 3단계: 녹음 & 발표 -->
+        <div class="fun-card record-card">
+          <span class="badge-step" style="background:#0288D1;">3단계: 소리내어 말해봐요</span>
+          <div class="timer-display" id="timerText">00:00</div>
+          
+          <div class="record-btn-wrapper">
+            <button class="record-btn" id="recordBtn" onclick="toggleRecording()">
+              <span id="recordIcon">🎙️</span>
+            </button>
+          </div>
+
+          <div class="status-msg" id="statusMsg">빨간 마이크를 누르면 녹음이 시작돼요!</div>
+
+          <!-- 녹음 완료 후 재생 & 저장 -->
+          <div class="playback-box" id="playbackBox">
+            <p style="font-family:'Jua',sans-serif; color:#0277BD; font-size:15px;">🎧 내 목소리를 들어볼까요?</p>
+            <audio id="audioPlayer" controls></audio>
+            <button class="save-btn" onclick="savePresentation()">
+              <span>🌟</span> 멋져요! 스티커 & 달성 체크 받기
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 2. AI 인터뷰 (단일 여성 선생님 모드) 화면 -->
+      <div id="tab-interview" class="view-section">
+
+        <div class="interview-mascot-box">
+          <div class="interview-mascot-avatar">🐿️</div>
+          <div class="interview-intro-text">
+            <h3>말랑이 선생님과 1:1 따뜻한 대화</h3>
+            <p>천천히 편안하게 말해도 괜찮아요~ 선생님이 귀 기울여 들을게요! 💕</p>
+          </div>
+        </div>
+
+        <!-- 채팅 메시지 영역 -->
+        <div class="chat-messages-box" id="chatMessagesBox">
+          <!-- 대화 메시지가 실시간으로 쌓입니다 -->
+        </div>
+
+        <!-- 말하기 및 입력 컨트롤러 -->
+        <div class="chat-controls-box">
+          <button class="voice-talk-btn" id="voiceTalkBtn" onclick="toggleVoiceInput()">
+            <span id="voiceTalkIcon">🎤</span> <span id="voiceTalkText">눌러서 선생님께 말하기</span>
+          </button>
+          
+          <div class="text-input-row">
+            <input type="text" class="chat-text-input" id="chatTextInput" placeholder="글자로 적어주셔도 좋아요..." onkeypress="handleInputKey(event)">
+            <button class="chat-send-btn" onclick="sendUserText()">보내기</button>
+          </div>
+        </div>
+
+        <!-- 3번 대화 후 조립 완성된 발표 카드 -->
+        <div class="assembled-script-card" id="assembledScriptCard">
+          <div class="assembled-header">
+            <span>🥪</span> 우리가 함께 완성한 멋진 3문장 발표 원고예요!
+          </div>
+          <div class="assembled-text-box" id="assembledTextBox">
+            <!-- 완성된 발표문 텍스트 -->
+          </div>
+          <button class="save-btn" onclick="copyAndGoToPractice()">
+            <span>🎙️</span> 이 원고로 진짜 발표 녹음하러 가기!
+          </button>
+        </div>
+
+      </div>
+
+      <!-- 3. 주제 리스트 & 달성 여부 (Checklist) 화면 -->
+      <div id="tab-checklist" class="view-section">
+        
+        <!-- 달성도 프로그레스 요약 -->
+        <div class="progress-summary-box">
+          <div class="progress-header">
+            <span class="progress-title">
+              <span>🏆</span> <span id="progressLevelTitle">Lv.1 공식 주제 달성도</span>
+            </span>
+            <span class="progress-score" id="progressScoreText">0 / 28 완료 (0%)</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFillBar"></div>
+          </div>
+        </div>
+
+        <!-- 학기별 필터 버튼 영역 -->
+        <div class="filter-tags-row" id="semesterFilterRow">
+          <!-- JS 렌더링 -->
+        </div>
+
+        <!-- 체크리스트 목록 -->
+        <div class="topic-checklist" id="topicChecklistContainer">
+          <!-- JS 렌더링 -->
+        </div>
+
+      </div>
+
+      <!-- 4. 스티커 판 화면 -->
+      <div id="tab-stickers" class="view-section">
+        <div style="text-align: center;">
+          <h3 style="font-family:'Jua',sans-serif; color:#4E342E; font-size:20px;">내 칭찬 스티커 모음</h3>
+          <p style="font-size:13px; color:#795548; margin-top:4px;">하루 한 번 발표를 끝까지 시도할 때마다 스티커가 켜져요!</p>
+        </div>
+
+        <div class="stickers-grid" id="stickersGrid">
+          <!-- JS 렌더링 -->
+        </div>
+      </div>
+
+      <!-- 5. 보관함 화면 -->
+      <div id="tab-history" class="view-section">
+        <div style="text-align: center;">
+          <h3 style="font-family:'Jua',sans-serif; color:#4E342E; font-size:20px;">타임캡슐 발표 기록</h3>
+          <p style="font-size:13px; color:#795548; margin-top:4px;">지난 발표 목소리를 다시 들으며 나의 성장을 확인해요.</p>
+        </div>
+
+        <div class="history-list" id="historyList">
+          <!-- JS 렌더링 -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 교육과정 기준표 전용 팝업 모달 -->
+  <div class="modal-overlay" id="curriculumModal" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><span>📖</span> 대한민국 초등 국어과 교육과정 기준표</h3>
+        <button class="modal-close-btn" onclick="closeCurriculumModal()">✕</button>
+      </div>
+      <div class="modal-body" id="curriculumRoadmapList">
+        <!-- JS로 5단계 전체 로드맵 상세 렌더링 -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // -------------------------------------------------------------
+    // 교육부 2022 개정 초등 국어과 교과서 단원 수록 2배 대규모 공식 주제 데이터
+    // -------------------------------------------------------------
+    const CURRICULUM_DATA = [
+      {
+        level: 1,
+        title: "Lv.1 마음 열기와 경험",
+        targetGrade: "초등 1~2학년 (기초)",
+        stdCode: "[2국01-05], [2국01-03]",
+        stdDesc: "주변 사람들에게 자신 있게 말하며, 대상에 대한 자신의 생각이나 느낌을 솔직하게 표현한다.",
+        frameworkName: "3문장 감정 샌드위치",
+        coachingTip: "생각을 문장으로 잇는 첫걸음입니다. 잘잘못을 따지지 말고 '자기 생각'을 끝까지 말한 것 자체를 크게 칭찬해 주세요.",
+        steps: [
+          { tag: "1. 소개", hint: "제가 소개할 것은 [이것]입니다.", ex: "제가 가장 좋아하는 간식은 붕어빵입니다." },
+          { tag: "2. 이유", hint: "왜냐하면 [이유]이기 때문입니다.", ex: "왜냐하면 겉은 바삭하고 속은 달콤하기 때문입니다." },
+          { tag: "3. 느낌", hint: "그래서 저는 [내 기분/생각]합니다.", ex: "그래서 추운 겨울마다 엄마와 함께 먹고 싶습니다." }
+        ],
+        semesters: ["전체", "초1-1", "초1-2", "초2-1", "초2-2"],
+        topics: [
+          // 초1-1 (7개)
+          { id: "L1_01", sem: "초1-1", source: "📗 초1-1 국어 1단원: 바른 자세로 읽고 써요", question: "내 이름의 뜻과 내가 가장 좋아하는 놀이를 친구들에게 자신 있게 소개해 보세요." },
+          { id: "L1_02", sem: "초1-1", source: "📗 초1-1 국어 4단원: 기분을 말해요", question: "최근에 가장 기분 좋고 행복했던 순간과 그때 내 마음을 표현해 보세요." },
+          { id: "L1_03", sem: "초1-1", source: "📗 초1-1 국어 5단원: 다정하게 인사해요", question: "아침에 만나는 선생님이나 친구에게 어떤 표정과 목소리로 인사하고 싶은지 말해 볼까요?" },
+          { id: "L1_04", sem: "초1-1", source: "📗 초1-1 국어 7단원: 생각을 가꾸어요", question: "재미있게 읽은 동시 한 구절을 떠올리며 내 머릿속에 떠오른 생각을 말해 보세요." },
+          { id: "L1_05", sem: "초1-1", source: "📗 초1-1 국어 8단원: 겪은 일을 써요", question: "지난 주말 가족과 함께 먹었던 맛있는 음식과 식사 시간의 기분을 이야기해 보세요." },
+          { id: "L1_06", sem: "초1-1", source: "📗 초1-1 통합(봄): 봄이 오면", question: "따뜻한 봄날 길가에서 발견한 파릇파릇한 새싹이나 꽃을 본 느낌을 말해 볼까요?" },
+          { id: "L1_07", sem: "초1-1", source: "📗 초1-1 통합(학교): 우리는 1학년", question: "초등학교에 입학해서 유치원 때와 가장 달라진 점 한 가지와 내 마음은?" },
+          // 초1-2 (7개)
+          { id: "L1_08", sem: "초1-2", source: "📗 초1-2 국어 2단원: 소리와 모양을 흉내 내요", question: "내가 가장 좋아하는 동물이나 곤충의 소리와 모습을 흉내 내며 소개해 볼까요?" },
+          { id: "L1_09", sem: "초1-2", source: "📗 초1-2 국어 4단원: 마음을 담아서", question: "미안했던 마음을 전하고 싶은 친구나 가족에게 용기 내어 사과 한마디를 전해 볼까요?" },
+          { id: "L1_10", sem: "초1-2", source: "📗 초1-2 국어 6단원: 이야기꽃을 피워요", question: "내가 좋아하는 옛날이야기 속 주인공에게 꼭 해주고 싶은 응원의 말을 전해 보세요." },
+          { id: "L1_11", sem: "초1-2", source: "📗 초1-2 국어 9단원: 겪은 일을 글로 써요", question: "학교 쉬는 시간에 친구들과 운동장에서 신나게 뛰어놀았던 즐거운 순간을 이야기해 보세요." },
+          { id: "L1_12", sem: "초1-2", source: "📗 초1-2 국어 10단원: 책과 친해져요", question: "내가 요즘 침대 머리맡에 두고 가장 아껴 읽는 그림책을 소개해 줄 수 있나요?" },
+          { id: "L1_13", sem: "초1-2", source: "📗 초1-2 통합(가을): 알록달록 가을", question: "바스락거리는 가을 낙엽을 밟을 때의 소리와 기분을 실감 나게 말해 볼까요?" },
+          { id: "L1_14", sem: "초1-2", source: "📗 초1-2 통합(겨울): 따뜻한 겨울", question: "하얀 눈이 펑펑 내리는 날 가장 만들어보고 싶은 눈사람의 모양은?" },
+          // 초2-1 (7개)
+          { id: "L1_15", sem: "초2-1", source: "📗 초2-1 국어 1단원: 시를 즐겨요", question: "봄, 여름, 가을, 겨울 중 내가 가장 사랑하는 계절과 그 계절만의 특별한 느낌은?" },
+          { id: "L1_16", sem: "초2-1", source: "📗 초2-1 국어 3단원: 마음을 나누어요", question: "친구 또는 가족에게 고마웠던 일 한 가지와 내 마음을 전해 보세요." },
+          { id: "L1_17", sem: "초2-1", source: "📗 초2-1 국어 6단원: 알맞게 소개해요", question: "내가 매일 필통 속에 넣고 다니는 소중한 학용품 한 가지를 자세히 자랑해 보세요." },
+          { id: "L1_18", sem: "초2-1", source: "📗 초2-1 국어 10단원: 다른 사람을 생각해요", question: "내가 우리 집에서 가장 아끼는 보물 1호와 그 까닭을 소개해 볼까요?" },
+          { id: "L1_19", sem: "초2-1", source: "📗 초2-1 국어 11단원: 상상의 날개를 펴요", question: "내가 만약 하늘을 나는 마법 양탄자를 갖게 된다면 어디로 날아가고 싶나요?" },
+          { id: "L1_20", sem: "초2-1", source: "📗 초2-1 통합(봄): 알쏭달쏭 봄", question: "봄비가 내리는 날 우산을 쓰고 걸을 때 들리는 빗소리와 내 기분은?" },
+          { id: "L1_21", sem: "초2-1", source: "📗 초2-1 통합(여름): 초록이의 여름", question: "시원한 여름 수박을 한 입 크게 베어 물었을 때의 맛과 느낌을 표현해 보세요." },
+          // 초2-2 (7개)
+          { id: "L1_22", sem: "초2-2", source: "📗 초2-2 국어 1단원: 장면을 떠올리며", question: "내가 가장 재미있게 읽은 그림책의 주인공과 기억에 남는 장면을 말해 보세요." },
+          { id: "L1_23", sem: "초2-2", source: "📗 초2-2 국어 4단원: 인물의 마음을 짐작해요", question: "내가 만약 하루 동안 투명인간이 된다면 가장 먼저 무엇을 하고 싶나요?" },
+          { id: "L1_24", sem: "초2-2", source: "📗 초2-2 국어 9단원: 주요 내용을 찾아요", question: "내가 가장 좋아하는 간식은 무엇이고 왜 좋아하는지 말해 볼까요?" },
+          { id: "L1_25", sem: "초2-2", source: "📗 초2-2 국어 11단원: 실감 나게 표현해요", question: "어른이 되면 꼭 해보고 싶은 꿈 한 가지와 그 이유를 말해 볼까요?" },
+          { id: "L1_26", sem: "초2-2", source: "📗 초2-2 국어 5단원: 간직하고 싶은 노래", question: "내가 기분이 울적하거나 신날 때 흥얼거리는 애창곡 동요와 그 이유는?" },
+          { id: "L1_27", sem: "초2-2", source: "📗 초2-2 국어 7단원: 일이 일어난 차례를 살펴요", question: "생일파티나 어린이날 선물 상자를 처음 열어보았을 때의 두근거렸던 마음은?" },
+          { id: "L1_28", sem: "초2-2", source: "📗 초2-2 통합(겨울): 겨울을 따뜻하게", question: "추운 겨울날 밖에서 돌아와 포근한 이불 속에 쏙 들어갔을 때의 느낌을 말해 보세요." }
+        ]
+      },
+      {
+        level: 2,
+        title: "Lv.2 관찰과 순서대로 말하기",
+        targetGrade: "초등 2학년 (심화)",
+        stdCode: "[2국01-02], [2국01-04]",
+        stdDesc: "일이 일어난 순서를 고려하며 말하고, 주변 대상을 관찰하여 그 특징이 드러나게 소개한다.",
+        frameworkName: "순서 & 오감 묘사 기법",
+        coachingTip: "초2의 핵심 성취 목표입니다. '언제, 어디서, 무엇을 순서대로' 연결하는 연습을 통해 뇌 속 전두엽의 시간적 순서화 능력이 발달합니다.",
+        steps: [
+          { tag: "1. 상황", hint: "언제, 어디서 일어난 일인가요?", ex: "지난 일요일에 가족과 함께 공원에 다녀왔습니다." },
+          { tag: "2. 순서", hint: "첫째로 ~하고, 다음으로 ~했습니다.", ex: "먼저 자전거를 신나게 타고, 다음으로 시원한 아이스크림을 먹었습니다." },
+          { tag: "3. 배운점", hint: "가장 기억에 남는 순간과 느낌은?", ex: "바람을 가르며 달릴 때 가슴이 뻥 뚫리는 기분이 들어 행복했습니다." }
+        ],
+        semesters: ["전체", "초2-1", "초2-2", "초3-1", "초3-2"],
+        topics: [
+          // 초2-1 (6개)
+          { id: "L2_01", sem: "초2-1", source: "📗 초2-1 국어 8단원: 마음을 짐작해요", question: "지난 주말에 있었던 일을 시간 순서(아침, 점심, 저녁)대로 차례차례 말해 볼까요?" },
+          { id: "L2_02", sem: "초2-1", source: "📗 초2-1 국어 4단원: 말놀이를 해요", question: "내가 제일 좋아하는 보드게임이나 카드놀이의 진행 순서와 승리 규칙을 설명해 보세요." },
+          { id: "L2_03", sem: "초2-1", source: "📗 초2-1 국어 2단원: 자신 있게 말해요", question: "새 학기 첫날 교실에서 짝꿍과 나누었던 첫 대화와 상황을 순서대로 말해 볼까요?" },
+          { id: "L2_04", sem: "초2-1", source: "📗 초2-1 국어 7단원: 친구들에게 알려요", question: "내가 가장 좋아하는 곤충이나 동물의 하루 일과와 움직임을 관찰하여 순서대로 묘사해 보세요." },
+          { id: "L2_05", sem: "초2-1", source: "📗 초2-1 국어 9단원: 생각을 나타내요", question: "우리 집 식탁에서 부모님과 함께 식사 예절을 지키며 밥을 먹는 과정을 순서대로 말해 보세요." },
+          { id: "L2_06", sem: "초2-1", source: "📗 초2-1 수학 연계: 규칙을 찾아요", question: "체스판이나 바둑판, 옷의 줄무늬처럼 우리 집 주변에서 찾은 패턴과 규칙을 설명해 볼까요?" },
+          // 초2-2 (6개)
+          { id: "L2_07", sem: "초2-2", source: "📗 초2-2 국어 2단원: 자세하게 소개해요", question: "내가 가장 아끼는 장난감(또는 학용품)의 모양, 색깔, 촉감을 눈에 보이듯 묘사해 주세요." },
+          { id: "L2_08", sem: "초2-2", source: "📗 초2-2 국어 8단원: 바르게 말해요", question: "학교에서 친구들과 함께 했던 재미있는 놀이의 규칙과 순서를 설명해 볼까요?" },
+          { id: "L2_09", sem: "초2-2", source: "📗 초2-2 국어 6단원: 칭찬을 나눠요", question: "최근에 칭찬을 받았던 일을 떠올리며, 어떤 일이 어떤 순서로 있었는지 말해 보세요." },
+          { id: "L2_10", sem: "초2-2", source: "📗 초2-2 국어 3단원: 인물의 마음을 짐작해요", question: "동화책 속 주인공이 위기를 겪고 그것을 해결해 나가는 과정을 순서대로 이야기해 볼까요?" },
+          { id: "L2_11", sem: "초2-2", source: "📗 초2-2 국어 10단원: 칭찬하는 말을 주고받아요", question: "어머니나 아버지의 하루 일과를 아침부터 밤까지 관찰하고 감사한 순서대로 말해 보세요." },
+          { id: "L2_12", sem: "초2-2", source: "📗 초2-2 미술 연계: 알록달록 만들기", question: "색종이나 찰흙으로 좋아하는 모형을 만들 때의 첫 번째와 마지막 순서를 설명해 보세요." },
+          // 초3-1 (6개)
+          { id: "L2_13", sem: "초3-1", source: "📗 초3-1 국어 6단원: 일이 일어난 까닭", question: "오늘 아침 잠에서 깨어나 교실 책상에 앉기까지 내가 한 일들을 순서대로 말해 보세요." },
+          { id: "L2_14", sem: "초3-1", source: "📗 초3-1 국어 2단원: 문단의 짜임", question: "우리 동네(또는 학교)에서 내가 가장 좋아하는 장소와 그곳의 특별한 풍경을 소개해 볼까요?" },
+          { id: "L2_15", sem: "초3-1", source: "📗 초3-1 국어 1단원: 재미가 톡톡톡", question: "내가 좋아하는 과일(사과, 딸기 등)의 달콤한 향기와 맛, 씹는 소리를 오감으로 묘사해 보세요." },
+          { id: "L2_16", sem: "초3-1", source: "📗 초3-1 국어 9단원: 어떤 내용일까", question: "만화 영화나 동화책 속 가장 흥미진진했던 사건을 순서에 맞게 간추려 말해 보세요." },
+          { id: "L2_17", sem: "초3-1", source: "📗 초3-1 국어 4단원: 내 마음을 편지에 담아", question: "편지를 쓰기 위해 받는 사람을 떠올리고 내용을 적어 우체통에 넣기까지의 순서는?" },
+          { id: "L2_18", sem: "초3-1", source: "📗 초3-1 과학 연계: 동물의 한살이", question: "나비나 개구리가 알에서 깨어나 어른이 되기까지의 변화 과정을 순서대로 설명해 보세요." },
+          // 초3-2 (6개)
+          { id: "L2_19", sem: "초3-2", source: "📗 초3-2 국어 1단원: 작품을 보고", question: "식물이나 반려동물을 정성껏 돌보는 하루 일과 과정을 순서대로 발표해 보세요." },
+          { id: "L2_20", sem: "초3-2", source: "📗 초3-2 국어 8단원: 글의 흐름을 생각해요", question: "내가 겪은 일 중 가장 보람찼던 경험을 [처음 - 가운데 - 끝] 순서로 이야기해 볼까요?" },
+          { id: "L2_21", sem: "초3-2", source: "📗 초3-2 국어 7단원: 감동을 나누어요", question: "내가 좋아하는 간식(토스트, 라면, 주먹밥 등)을 직접 만드는 순서와 비법을 소개해 볼까요?" },
+          { id: "L2_22", sem: "초3-2", source: "📗 초3-2 국어 2단원: 중심 생각을 찾아요", question: "과학관이나 박물관을 둘러보았던 관람 동선과 가장 기억에 남는 전시물을 순서대로 말해 보세요." },
+          { id: "L2_23", sem: "초3-2", source: "📗 초3-2 국어 6단원: 마음을 담아 노래해요", question: "학예회나 발표회를 위해 노래나 춤 연습을 처음 시작해서 무대에 서기까지의 과정은?" },
+          { id: "L2_24", sem: "초3-2", source: "📗 초3-2 사회 연계: 우리 고장의 명소", question: "우리 고장의 오래된 시장이나 공원을 걸을 때 보이는 상점들의 순서와 분위기를 소개해 보세요." }
+        ]
+      },
+      {
+        level: 3,
+        title: "Lv.3 원인과 결과 설명하기",
+        targetGrade: "초등 3~4학년 (기초)",
+        stdCode: "[4국01-04], [4국01-01]",
+        stdDesc: "대상의 특성을 고려하여 듣는 이가 이해하기 쉽게 설명하고, 원인과 결과의 관계를 고려하여 말한다.",
+        frameworkName: "인과관계(Why-So) 설명법",
+        coachingTip: "단순한 기분 표현을 넘어 '원인'과 '결과'의 연결고리를 만듭니다. '왜 그런 일이 생겼을까?'라는 유도 질문이 큰 도움이 됩니다.",
+        steps: [
+          { tag: "1. 현상", hint: "설명하고 싶은 사실이나 문제는 무엇인가요?", ex: "요즘 우리 주변에 길거리 쓰레기가 늘어나고 있습니다." },
+          { tag: "2. 원인", hint: "그 일이 일어난 까닭(원인)은 무엇인가요?", ex: "그 원인은 쓰레기통이 부족하고 사람들이 무심코 버리기 때문입니다." },
+          { tag: "3. 결과", hint: "그로 인해 생기는 결과와 변화는?", ex: "이로 인해 거리가 더러워지고 동물들이 위험해지므로, 쓰레기통을 늘려야 합니다." }
+        ],
+        semesters: ["전체", "초3-2", "초4-1", "초4-2"],
+        topics: [
+          // 초3-2 (6개)
+          { id: "L3_01", sem: "초3-2", source: "📗 초3-2 국어 3단원: 자신의 생각을 명확하게", question: "내가 가장 즐겨 하는 취미 활동을 친구에게 추천하고, 왜 좋은지 인과관계로 설명해 볼까요?" },
+          { id: "L3_02", sem: "초3-2", source: "📗 초3-2 국어 5단원: 바르게 대화해요", question: "친구와 대화할 때 경청하고 눈을 마주쳐야 서로의 우정이 깊어지는 이유를 설명해 보세요." },
+          { id: "L3_03", sem: "초3-2", source: "📗 초3-2 과학 연계: 물질의 성질", question: "자석에 붙는 쇠붙이와 붙지 않는 플라스틱의 차이점과 일상 속 자석의 쓸모를 설명해 볼까요?" },
+          { id: "L3_04", sem: "초3-2", source: "📗 초3-2 사회 연계: 옛날과 오늘날의 생활", question: "교통수단(기차, 비행기)의 발달로 인해 우리 생활이 어떻게 편리해졌는지 인과로 설명해 보세요." },
+          { id: "L3_05", sem: "초3-2", source: "📗 초3-2 도덕 연계: 생명을 소중히", question: "버려진 유기동물이 길에서 생활할 때 발생하는 문제와 우리가 보호해야 하는 까닭은?" },
+          { id: "L3_06", sem: "초3-2", source: "📗 초3-2 국어 4단원: 감각적 표현을 활용해요", question: "여름 장마철에 습도가 높아지면 왜 빨래가 잘 마르지 않는지 과학적 원인을 설명해 보세요." },
+          // 초4-1 (8개)
+          { id: "L3_07", sem: "초4-1", source: "📗 초4-1 국어 2단원: 내용을 간추려요", question: "식물이 쑥쑥 자라기 위해 햇빛과 물이 꼭 필요한 과학적 까닭을 친구에게 설명해 볼까요?" },
+          { id: "L3_08", sem: "초4-1", source: "📗 초4-1 국어 5단원: 내가 만든 이야기", question: "스마트폰을 길을 걸으며 볼 때 발생할 수 있는 위험한 상황(원인과 결과)을 설명해 보세요." },
+          { id: "L3_09", sem: "초4-1", source: "📗 초4-1 국어 3단원: 느낌을 살려 말해요", question: "박물관이나 유적지를 견학했을 때 새롭게 알게 된 역사적 사실과 그 원인을 말해 볼까요?" },
+          { id: "L3_10", sem: "초4-1", source: "📗 초4-1 국어 7단원: 사전은 내 친구", question: "내가 자주 쓰는 순우리말 단어의 정확한 뜻과 그 말이 생겨난 배경을 소개해 보세요." },
+          { id: "L3_11", sem: "초4-1", source: "📗 초4-1 과학 연계: 지층과 화석", question: "수억 년 전 바다에 살던 조개의 화석이 왜 높은 산꼭대기에서 발견될 수 있는지 설명해 볼까요?" },
+          { id: "L3_12", sem: "초4-1", source: "📗 초4-1 사회 연계: 촌락과 도시", question: "농촌이나 어촌에 젊은 사람들이 줄어들고 고령화가 일어나는 원인과 그 결과는?" },
+          { id: "L3_13", sem: "초4-1", source: "📗 초4-1 체육 연계: 건강한 생활", question: "패스트푸드나 탄산음료를 매일 먹으면 우리 뼈와 치아에 어떤 나쁜 결과가 생길까요?" },
+          { id: "L3_14", sem: "초4-1", source: "📗 초4-1 도덕 연계: 정직한 생활", question: "작은 거짓말을 시작하면 왜 눈덩이처럼 거짓말이 커지게 되는지 원인과 결과를 말해 보세요." },
+          // 초4-2 (8개)
+          { id: "L3_15", sem: "초4-2", source: "📗 초4-2 국어 3단원: 바른 말 고운 말", question: "횡단보도 신호등이 초록불로 바뀌어도 좌우를 살피고 건너야 하는 중요한 이유는?" },
+          { id: "L3_16", sem: "초4-2", source: "📗 초4-2 국어 7단원: 의견이 드러나게", question: "우리 생활 속에서 플라스틱 일회용품 쓰레기를 줄여야 하는 환경적 까닭을 설명해 보세요." },
+          { id: "L3_17", sem: "초4-2", source: "📗 초4-2 국어 8단원: 생각하며 읽어요", question: "규칙적인 운동이나 스트레칭이 우리 몸과 마음에 미치는 긍정적 변화(결과)는 무엇일까요?" },
+          { id: "L3_18", sem: "초4-2", source: "📗 초4-2 국어 2단원: 마음을 전하는 글", question: "선생님이나 부모님께 감사 편지를 쓰게 된 특별한 계기(원인)와 내 마음의 변화는?" },
+          { id: "L3_19", sem: "초4-2", source: "📗 초4-2 국어 6단원: 본받고 싶은 인물", question: "내가 존경하는 위인이 위대한 업적을 남길 수 있었던 가장 결정적인 성격과 노력은?" },
+          { id: "L3_20", sem: "초4-2", source: "📗 초4-2 과학 연계: 물의 상태 변화", question: "차가운 음료수 캔 표면에 물방울이 송글송글 맺히는 까닭(응결 현상)을 쉽게 설명해 보세요." },
+          { id: "L3_21", sem: "초4-2", source: "📗 초4-2 사회 연계: 다양한 문화", question: "다른 나라의 전통 음식이나 옷차림이 기후 환경에 따라 다르게 발달한 이유를 설명해 볼까요?" },
+          { id: "L3_22", sem: "초4-2", source: "📗 초4-2 도덕 연계: 따뜻한 배려", question: "친구에게 무심코 던진 놀리는 말이 상대방에게 깊은 상처를 남기게 되는 인과관계는?" }
+        ]
+      },
+      {
+        level: 4,
+        title: "Lv.4 의견과 타당한 근거 (PREP)",
+        targetGrade: "초등 4~5학년",
+        stdCode: "[4국01-02], [4국01-06]",
+        stdDesc: "주제에 대해 자신의 의견을 제시하고, 이를 뒷받침할 수 있는 타당한 까닭과 구체적 예를 들어 말한다.",
+        frameworkName: "논리적인 PREP 기법",
+        coachingTip: "글로벌 표준 스피치 모델인 PREP(결론-이유-사례-결론)입니다. 감정적 떼쓰기가 아닌 '타당한 까닭'으로 설득하는 힘을 길러줍니다.",
+        steps: [
+          { tag: "1. 주장(P)", hint: "[주장] 저는 ~해야 한다고 생각합니다.", ex: "저는 학교 쉬는 시간을 5분 더 늘려야 한다고 생각합니다." },
+          { tag: "2. 이유(R)", hint: "[이유] 왜냐하면 ~이기 때문입니다.", ex: "왜냐하면 화장실에 다녀오고 다음 수업을 준비하기에 10분은 너무 촉박하기 때문입니다." },
+          { tag: "3. 사례(E)", hint: "[예시] 실제로 ~한 경험이 있습니다.", ex: "실제로 지난주에 준비물을 챙기느라 물을 마실 시간조차 부족했던 적이 있습니다." },
+          { tag: "4. 강조(P)", hint: "[강조] 그러므로 ~해 주시기 바랍니다.", ex: "그러므로 수업 집중도를 높이기 위해서라도 쉬는 시간을 늘려야 합니다." }
+        ],
+        semesters: ["전체", "초4-1", "초4-2", "초5-1", "초5-2"],
+        topics: [
+          // 초4-1 (5개)
+          { id: "L4_01", sem: "초4-1", source: "📗 초4-1 국어 8단원: 생각을 나누어요", question: "초등학생의 스마트폰 하루 사용 시간을 부모님과 함께 규칙으로 정해야 할까요?" },
+          { id: "L4_02", sem: "초4-1", source: "📗 초4-1 국어 6단원: 서로 다른 의견", question: "초등학교 시험이나 평가를 줄이고 체험 학습을 더 늘려야 할까요? 내 주장은?" },
+          { id: "L4_03", sem: "초4-1", source: "📗 초4-1 도덕 연계: 인권을 존중해요", question: "어린이라는 이유로 의견을 무시당하지 않으려면 어떤 태도로 주장해야 할까요?" },
+          { id: "L4_04", sem: "초4-1", source: "📗 초4-1 사회 연계: 민주주의의 기초", question: "학급 임원을 뽑을 때 친한 친구보다 성실하고 책임감 있는 친구를 뽑아야 하는 까닭은?" },
+          { id: "L4_05", sem: "초4-1", source: "📗 초4-1 체육 연계: 페어플레이", question: "체육 경기에서 승리하는 것보다 규칙을 지키는 정정당당함이 왜 더 중요한가요?" },
+          // 초4-2 (5개)
+          { id: "L4_06", sem: "초4-2", source: "📗 초4-2 국어 4단원: 의견을 제시해요", question: "학교 급식에 싫어하는 음식이 나왔을 때, 꼭 다 먹어야 할까요? 내 생각과 타당한 까닭은?" },
+          { id: "L4_07", sem: "초4-2", source: "📗 초4-2 국어 5단원: 생각을 담아서", question: "초등학교 교실에서 매주 하루는 독서 마라톤 시간을 필수로 지정해야 할까요?" },
+          { id: "L4_08", sem: "초4-2", source: "📗 초4-2 사회 연계: 환경을 생각하는 우리", question: "분리수거를 철저히 하지 않는 사람들에게 과태료를 부과해야 하는가에 대한 내 의견은?" },
+          { id: "L4_09", sem: "초4-2", source: "📗 초4-2 도덕 연계: 공공장소 예절", question: "도서관이나 극장에서 떠드는 행동을 제재하는 강력한 규칙이 필요한 이유는?" },
+          { id: "L4_10", sem: "초4-2", source: "📗 초4-2 실과/과학 연계: 지속가능한 에너지", question: "가까운 거리는 자전거나 도보로 이동해야 하는 환경적 이유와 나의 다짐은?" },
+          // 초5-1 (5개)
+          { id: "L4_11", sem: "초5-1", source: "📗 초5-1 국어 2단원: 설명하는 글을 읽고", question: "어린이 보호구역(스쿨존) 제한 속도를 철저히 지켜야 하는 이유를 논리적으로 주장해 볼까요?" },
+          { id: "L4_12", sem: "초5-1", source: "📗 초5-1 국어 4단원: 겪은 일을 써요", question: "반려동물을 입양하기 전 반드시 가족 전체가 돌봄 교육을 의무적으로 이수해야 할까요?" },
+          { id: "L4_13", sem: "초5-1", source: "📗 초5-1 국어 8단원: 아는 것과 새롭게 안 것", question: "미세먼지나 황사가 심한 날에는 왜 야외 체육 수업을 대체 프로그램으로 진행해야 할까요?" },
+          { id: "L4_14", sem: "초5-1", source: "📗 초5-1 실과 연계: 나의 균형 잡힌 식사", question: "청소년기와 성장기 어린이에게 아침 식사가 왜 필수적인지 근거를 들어 주장해 보세요." },
+          { id: "L4_15", sem: "초5-1", source: "📗 초5-1 사회 연계: 인권과 법", question: "어린이의 안전을 위해 밤 10시 이후 청소년 게임 접속 셧다운제를 적용해야 할까요?" },
+          // 초5-2 (5개)
+          { id: "L4_16", sem: "초5-2", source: "📗 초5-2 국어 3단원: 의견을 조정하며", question: "우리 학급을 더 평화롭고 따뜻하게 만들기 위해 새로 만들고 싶은 1가지 규칙과 그 이유는?" },
+          { id: "L4_17", sem: "초5-2", source: "📗 초5-2 국어 6단원: 타당성을 생각하며", question: "인공지능(AI)이 학생들의 독후감이나 숙제를 대신 써주는 것에 대한 내 생각과 근거는?" },
+          { id: "L4_18", sem: "초5-2", source: "📗 초5-2 국어 8단원: 우리말 지킴이", question: "온라인 채팅에서 비속어나 줄임말을 함부로 쓰지 말아야 하는 논리적 까닭은?" },
+          { id: "L4_19", sem: "초5-2", source: "📗 초5-2 도덕 연계: 사이버 윤리", question: "인터넷에 다른 사람의 얼굴이나 사진을 올릴 때 반드시 동의를 구해야 하는 법적·도덕적 이유는?" },
+          { id: "L4_20", sem: "초5-2", source: "📗 초5-2 사회 연계: 함께 살아가는 지구촌", question: "가난한 나라의 어린이 노동 착취를 막기 위해 공정무역 초콜릿을 사야 하는 까닭은?" }
+        ]
+      },
+      {
+        level: 5,
+        title: "Lv.5 설득과 비판적 토의 (OREO)",
+        targetGrade: "초등 5~6학년",
+        stdCode: "[6국01-02], [6국01-04], [6국01-05]",
+        stdDesc: "문제 상황에 대해 의견의 타당성을 비판적으로 검토하며, 반론을 고려하여 청중을 설득력 있게 설득한다.",
+        frameworkName: "하버드식 OREO 설득 기법",
+        coachingTip: "최고 단계의 연설·토론 스피치입니다. 상대방의 반론('물론 ~라는 의견도 있지만')까지 품어 안고 대안을 제시하는 고차원적 발표입니다.",
+        steps: [
+          { tag: "1. 의견(O)", hint: "[의견] 저는 ~라는 입장을 강력히 제안합니다.", ex: "저는 동물원의 동물들을 점진적으로 자연보호구역으로 돌려보내야 한다고 생각합니다." },
+          { tag: "2. 근거(R)", hint: "[근거] 가장 중요한 이유는 ~입니다.", ex: "동물원이라는 좁은 인공 공간은 동물들에게 극심한 정형행동과 스트레스를 유발하기 때문입니다." },
+          { tag: "3. 사례(E)", hint: "[사례/데이터] 실제 사례나 연구를 보면...", ex: "실제 연구에 따르면 넓은 서식지를 가진 북극곰의 경우 좁은 우리에서 수명이 절반 이하로 줄어듭니다." },
+          { tag: "4. 대안(O)", hint: "[대안/결론] 물론 ~하지만 대안으로...", ex: "물론 교육적 목적도 있지만, 이제는 가상현실(VR) 체험관 등 대체 방식을 도입해야 합니다." }
+        ],
+        semesters: ["전체", "초5-2", "초6-1", "초6-2"],
+        topics: [
+          // 초5-2 (6개)
+          { id: "L5_01", sem: "초5-2", source: "📗 초5-2 국어 7단원: 토의하여 해결해요", question: "동물원의 야생 동물들을 점진적으로 생태 보호구역으로 돌려보내야 할까요? (찬반 및 대안 제시)" },
+          { id: "L5_02", sem: "초5-2", source: "📗 초5-2 사회 연계: 기후 위기와 에너지", question: "원자력 발전소의 축소와 친환경 신재생에너지 확대를 둘러싼 갈등에 대한 나의 합리적 대안은?" },
+          { id: "L5_03", sem: "초5-2", source: "📗 초5-2 국어 5단원: 매체 자료를 활용해요", question: "유튜브 등 1인 미디어의 가짜 뉴스(허위 조작 정보) 처벌을 강화해야 하는 이유 설득" },
+          { id: "L5_04", sem: "초5-2", source: "📗 초5-2 도덕 연계: 지구촌 이웃 사랑", question: "난민 수용 문제에 대해 우리 사회가 인도주의와 사회적 갈등 중 무엇을 더 우선해야 할까요?" },
+          { id: "L5_05", sem: "초5-2", source: "📗 초5-2 실과 연계: 인공지능과 미래 사회", question: "인공지능이 인간의 일자리를 대체하는 미래에 대비해 우리가 길러야 할 필수 역량은?" },
+          { id: "L5_06", sem: "초5-2", source: "📗 초5-2 사회 연계: 법을 준수하는 시민", question: "촉법소년(형사 미성년자) 연령 기준을 낮추어야 하는가에 대한 비판적 논증과 대안 제시" },
+          // 초6-1 (7개)
+          { id: "L5_07", sem: "초6-1", source: "📗 초6-1 국어 4단원: 주장과 근거를 판단해요", question: "지구 온난화를 막기 위해 카페 및 매장의 일회용 플라스틱 컵 사용을 법으로 전면 금지해야 할까요?" },
+          { id: "L5_08", sem: "초6-1", source: "📗 초6-1 국어 2단원: 이야기를 간추려요", question: "초등학생의 개인 유튜브/크리에이터 활동은 장려되어야 할까, 제한되어야 할까?" },
+          { id: "L5_09", sem: "초6-1", source: "📗 초6-1 국어 8단원: 인물의 삶을 찾아", question: "실패를 두려워하지 않고 끊임없이 도전하는 태도가 왜 중요한지 역사적 인물의 사례로 설득해 보세요." },
+          { id: "L5_10", sem: "초6-1", source: "📗 초6-1 국어 6단원: 타당한 근거로 토론해요", question: "학교 내 스마트폰 소지 및 사용을 일괄적으로 전면 금지하는 학칙에 대한 찬반 의견은?" },
+          { id: "L5_11", sem: "초6-1", source: "📗 초6-1 사회 연계: 민주정치와 시민 참여", question: "청소년의 투표권(선거권) 연령을 만 16세로 더 낮추어야 할까요? 내 생각과 설득 논리는?" },
+          { id: "L5_12", sem: "초6-1", source: "📗 초6-1 도덕 연계: 평화로운 세상", question: "전쟁과 무력 분쟁을 해결하기 위해 국제연합(UN)과 세계 시민이 실천해야 할 가장 시급한 과제는?" },
+          { id: "L5_13", sem: "초6-1", source: "📗 초6-1 과학 연계: 생태계와 환경", question: "외래종 생물(황소개구리, 뉴트리아 등)의 확산이 토종 생태계에 미치는 파괴적 영향과 해결 방안" },
+          // 초6-2 (7개)
+          { id: "L5_14", sem: "초6-2", source: "📗 초6-2 국어 3단원: 타당한 근거로 글을 써요", question: "기후 위기 해결보다 천문학적인 비용이 드는 우주 탐사가 우선되어야 할까요?" },
+          { id: "L5_15", sem: "초6-2", source: "📗 초6-2 국어 5단원: 글에 담긴 생각과 비교해요", question: "도심 속 길고양이 급식(캣맘) 갈등을 해결하기 위해 우리 사회가 선택해야 할 최선의 방법은?" },
+          { id: "L5_16", sem: "초6-2", source: "📗 초6-2 국어 1단원: 작품 속 인물과 대화해요", question: "식당이나 카페 등 공공장소에서의 '노키즈존(No Kids Zone)' 운영 정책에 대한 내 견해와 대안은?" },
+          { id: "L5_17", sem: "초6-2", source: "📗 초6-2 국어 7단원: 우리 함께 살아가요", question: "인공지능 자율주행 자동차가 사고 상황에서 누구를 먼저 보호해야 할지에 대한 윤리적 기준 제안" },
+          { id: "L5_18", sem: "초6-2", source: "📗 초6-2 국어 4단원: 효과적으로 발표해요", question: "착한 소비(친환경 제품, 공정무역 제품 구매)가 우리 사회와 지구에 미치는 긍정적 나비효과 설득" },
+          { id: "L5_19", sem: "초6-2", source: "📗 초6-2 사회 연계: 지속가능한 발전", question: "경제 성장과 자연보호 중 무엇이 더 우선인가? 미래 세대를 위한 균형 잡힌 발전 전략 설득" },
+          { id: "L5_20", sem: "초6-2", source: "📗 초6-2 도덕 연계: 인간 존엄성과 유전자 기술", question: "유전자 조작 기술(크리스퍼 유전자 가위)을 인간의 질병 치료를 넘어 외모나 지능 개선에 써도 될까?" }
+        ]
+      }
+    ];
+
+    // 스티커 목록
+    const ALL_STICKERS = [
+      { id: 1, name: "용기 쑥쑥 사자", icon: "🦁" },
+      { id: 2, name: "또박또박 다람쥐", icon: "🐿️" },
+      { id: 3, name: "반짝이는 생각", icon: "💡" },
+      { id: 4, name: "생각 정리 천재", icon: "🧠" },
+      { id: 5, name: "자신감 로켓", icon: "🚀" },
+      { id: 6, name: "밝은 미소 해님", icon: "☀️" },
+      { id: 7, name: "발표의 왕관", icon: "👑" },
+      { id: 8, name: "황금 메달리스트", icon: "🥇" },
+      { id: 9, name: "무지개 탐험대", icon: "🌈" }
+    ];
+
+    let currentLevel = parseInt(localStorage.getItem('current_user_level') || '1', 10);
+    let currentSemesterFilter = "전체";
+    let currentTopicIndex = 0;
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+    let timerInterval = null;
+    let secondsElapsed = 0;
+    let recordedBlob = null;
+    let recordedBase64 = null;
+
+    // -------------------------------------------------------------
+    // AI 티키타카 인터뷰 상태 관리 & 단일 여성 자연어 음성 컨트롤러
+    // -------------------------------------------------------------
+    let interviewStep = 0;
+    let interviewAnswers = { target: "", reason: "", feeling: "" };
+    let speechRecognition = null;
+    let isListening = false;
+    let currentAudioPlayer = null;
+    let femaleTeacherVoice = null;
+    let activeUtterance = null;
+
+    // 초기 실행
+    window.addEventListener('DOMContentLoaded', () => {
+      renderLevelPills();
+      loadLevel(currentLevel);
+      renderCurriculumRoadmap();
+      renderChecklist();
+      renderStickers();
+      renderHistory();
+      initSpeechRecognition();
+      initVoiceSettings();
+    });
+
+    // -------------------------------------------------------------
+    // 다정한 여성 선생님 전용 음성 엔진 (Web Speech API)
+    // -------------------------------------------------------------
+    function pickFemaleVoice() {
+      if (!('speechSynthesis' in window)) return null;
+      const voices = window.speechSynthesis.getVoices();
+      if (!voices || voices.length === 0) return null;
+
+      const koVoices = voices.filter(v => v.lang && (v.lang.toLowerCase().includes('ko') || v.lang.toLowerCase().includes('korean')));
+      if (koVoices.length === 0) return null;
+
+      // 1순위: Edge / Windows 고품질 자연어 여성 음성 (SunHi Online Natural - 선희)
+      let vFind = koVoices.find(v => (v.name.includes('SunHi') || v.name.includes('선희')) && !v.name.includes('InJoon') && !v.name.includes('인준'));
+      if (vFind) return vFind;
+
+      // 2순위: Chrome 고품질 한국어 여성 음성 (Google 한국의)
+      vFind = koVoices.find(v => (v.name.includes('Google') || v.name.includes('Natural')) && !v.name.includes('InJoon') && !v.name.includes('인준') && !v.name.toLowerCase().includes('male'));
+      if (vFind) return vFind;
+
+      // 3순위: 남성(InJoon, 인준, Male 등)을 확실히 배제한 한국어 여성 음성 (Heami 등)
+      vFind = koVoices.find(v => !v.name.includes('InJoon') && !v.name.includes('인준') && !v.name.toLowerCase().includes('male') && !v.name.includes('남자'));
+      if (vFind) return vFind;
+
+      return koVoices[0];
+    }
+
+    function initVoiceSettings() {
+      if ('speechSynthesis' in window) {
+        femaleTeacherVoice = pickFemaleVoice();
+        window.speechSynthesis.onvoiceschanged = () => {
+          femaleTeacherVoice = pickFemaleVoice();
+        };
+      }
+    }
+
+    function stopAllVoices() {
+      if (currentAudioPlayer) {
+        currentAudioPlayer.pause();
+        currentAudioPlayer.src = "";
+        currentAudioPlayer = null;
+      }
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      activeUtterance = null;
+    }
+
+    function speakTeacherText(text) {
+      stopAllVoices();
+
+      if (!('speechSynthesis' in window)) return;
+
+      // 이모지 및 특수기호 깨끗이 제거
+      const cleanText = text
+        .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
+        .replace(/[~#*\[\]]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      if (!cleanText) return;
+
+      // 문장 단위 분할 (선생님다운 자연스러운 호흡)
+      const sentences = cleanText.split(/[\n.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
+      if (sentences.length === 0) return;
+
+      playTeacherSequence(sentences, 0);
+    }
+
+    function playTeacherSequence(sentences, index) {
+      if (index >= sentences.length) {
+        activeUtterance = null;
+        return;
+      }
+
+      if (!femaleTeacherVoice) {
+        femaleTeacherVoice = pickFemaleVoice();
+      }
+
+      const sentence = sentences[index];
+      const utt = new SpeechSynthesisUtterance(sentence);
+      utt.lang = 'ko-KR';
+      if (femaleTeacherVoice) {
+        utt.voice = femaleTeacherVoice;
+      }
+      // 초등 2학년 눈높이: 상냥하고 다정한 여성 선생님 톤 (음높이 1.18, 차분하고 따뜻한 속도 0.92)
+      utt.pitch = 1.18;
+      utt.rate = 0.92;
+
+      utt.onend = () => {
+        setTimeout(() => {
+          playTeacherSequence(sentences, index + 1);
+        }, 120);
+      };
+
+      utt.onerror = (e) => {
+        console.warn("TTS 에러:", e);
+        playTeacherSequence(sentences, index + 1);
+      };
+
+      activeUtterance = utt;
+      window.speechSynthesis.resume();
+      window.speechSynthesis.speak(utt);
+    }
+
+    // 음성 인식(STT) 초기화
+    function initSpeechRecognition() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        speechRecognition = new SpeechRecognition();
+        speechRecognition.lang = 'ko-KR';
+        speechRecognition.continuous = false;
+        speechRecognition.interimResults = false;
+
+        speechRecognition.onresult = (event) => {
+          const transcript = event.results[0][0].transcript;
+          handleUserAnswer(transcript);
+        };
+
+        speechRecognition.onerror = (event) => {
+          console.error("음성인식 에러:", event.error);
+          stopVoiceInputUI();
+        };
+
+        speechRecognition.onend = () => {
+          stopVoiceInputUI();
+        };
+      }
+    }
+
+    // 레벨 탭 렌더링
+    function renderLevelPills() {
+      const container = document.getElementById('levelPills');
+      container.innerHTML = '';
+
+      CURRICULUM_DATA.forEach(item => {
+        const pill = document.createElement('div');
+        pill.className = `level-pill ${item.level === currentLevel ? 'active' : ''}`;
+        pill.onclick = () => selectLevel(item.level);
+        pill.innerHTML = `
+          <span>Lv.${item.level}</span>
+          <span class="stage-name">${item.targetGrade.split(' ')[0]}</span>
+        `;
+        container.appendChild(pill);
+      });
+    }
+
+    // 레벨 선택
+    function selectLevel(lvl) {
+      currentLevel = lvl;
+      localStorage.setItem('current_user_level', currentLevel);
+      currentSemesterFilter = "전체";
+      renderLevelPills();
+      loadLevel(currentLevel);
+      renderChecklist();
+      renderCurriculumRoadmap();
+    }
+
+    // 현재 레벨 데이터 화면 반영
+    function loadLevel(lvl) {
+      const data = CURRICULUM_DATA.find(d => d.level === lvl) || CURRICULUM_DATA[0];
+
+      // 1. 교육부 성취기준 요약 뱃지
+      document.getElementById('stdBadgeCode').textContent = `${data.stdCode} • ${data.targetGrade}`;
+      document.getElementById('stdBadgeDesc').textContent = data.stdDesc;
+
+      // 2. 생각 정리 가이드 프레임워크 업데이트
+      document.getElementById('guideTitleMain').textContent = `🥪 ${data.title} 힌트`;
+      document.getElementById('guideFrameworkName').textContent = data.frameworkName;
+
+      const stepsContainer = document.getElementById('guideStepsList');
+      stepsContainer.innerHTML = '';
+      data.steps.forEach(st => {
+        const item = document.createElement('div');
+        item.className = 'guide-step-item';
+        item.innerHTML = `
+          <span class="step-tag">${st.tag}</span>
+          <div>
+            <div class="step-hint">${st.hint}</div>
+            <div class="step-example">💡 예: ${st.ex}</div>
+          </div>
+        `;
+        stepsContainer.appendChild(item);
+      });
+
+      // 3. 주제 갱신
+      shuffleTopic();
+    }
+
+    // 주제 무작위 추출
+    function shuffleTopic() {
+      const data = CURRICULUM_DATA.find(d => d.level === currentLevel) || CURRICULUM_DATA[0];
+      const topics = data.topics;
+      let newIdx;
+      do {
+        newIdx = Math.floor(Math.random() * topics.length);
+      } while (newIdx === currentTopicIndex && topics.length > 1);
+
+      setTopicByIndex(newIdx);
+    }
+
+    // 특정 인덱스 주제 설정
+    function setTopicByIndex(idx) {
+      const data = CURRICULUM_DATA.find(d => d.level === currentLevel) || CURRICULUM_DATA[0];
+      currentTopicIndex = idx;
+      const topicObj = data.topics[currentTopicIndex];
+
+      const sourceEl = document.getElementById('topicSourceTag');
+      const topicEl = document.getElementById('topicText');
+
+      sourceEl.textContent = topicObj.source;
+      topicEl.style.opacity = '0';
+      setTimeout(() => {
+        topicEl.textContent = topicObj.question;
+        topicEl.style.opacity = '1';
+      }, 120);
+    }
+
+    // 특정 주제를 선택하여 발표 탭으로 이동
+    function startTopicDirectly(topicId) {
+      const data = CURRICULUM_DATA.find(d => d.level === currentLevel) || CURRICULUM_DATA[0];
+      const foundIdx = data.topics.findIndex(t => t.id === topicId);
+      if (foundIdx !== -1) {
+        setTopicByIndex(foundIdx);
+        switchTab('practice');
+        window.scrollTo({ top: 120, behavior: 'smooth' });
+      }
+    }
+
+    // -------------------------------------------------------------
+    // AI 티키타카 인터뷰 (단일 호출로 수정)
+    // -------------------------------------------------------------
+    function startInterviewForCurrentTopic() {
+      switchTab('interview'); // switchTab 내부에서만 initInterviewChat() 1회 호출
+    }
+
+    function initInterviewChat() {
+      stopAllVoices();
+
+      const data = CURRICULUM_DATA.find(d => d.level === currentLevel) || CURRICULUM_DATA[0];
+      const curTopic = data.topics[currentTopicIndex];
+
+      interviewStep = 0;
+      interviewAnswers = { target: "", reason: "", feeling: "" };
+
+      const chatBox = document.getElementById('chatMessagesBox');
+      chatBox.innerHTML = '';
+      document.getElementById('assembledScriptCard').classList.remove('show');
+
+      // 단 하나의 다정한 여성 목소리만 재생
+      const firstGreeting = `우리 친구, 반가워요! 다정한 말랑이 선생님이에요.\n오늘 우리가 함께 이야기해 볼 주제는 [${curTopic.question}]예요.\n\n가장 먼저 떠오른 생각이나 주인공은 무엇인가요? 편안하게 이야기해 줄래요?`;
+      addChatMessage('ai', firstGreeting);
+      speakTeacherText(firstGreeting);
+    }
+
+    function addChatMessage(sender, text) {
+      const chatBox = document.getElementById('chatMessagesBox');
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${sender}`;
+
+      if (sender === 'ai') {
+        bubble.innerHTML = `
+          <div class="sender-name">🐿️ 말랑이 선생님</div>
+          <div>${text.replace(/\n/g, '<br>')}</div>
+        `;
+      } else {
+        bubble.textContent = text;
+      }
+
+      chatBox.appendChild(bubble);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // 음성 입력 토글
+    function toggleVoiceInput() {
+      if (!speechRecognition) {
+        alert("이 브라우저에서는 마이크 음성 인식을 지원하지 않습니다. 아래 입력창에 글로 적어주세요!");
+        return;
+      }
+
+      if (!isListening) {
+        try {
+          stopAllVoices(); // 아이가 말할 때는 선생님 음성 즉시 중단
+
+          speechRecognition.start();
+          isListening = true;
+          const btn = document.getElementById('voiceTalkBtn');
+          btn.classList.add('listening');
+          document.getElementById('voiceTalkIcon').textContent = "⏹️";
+          document.getElementById('voiceTalkText').textContent = "선생님이 듣고 있어요... 편하게 말씀하세요!";
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        speechRecognition.stop();
+        stopVoiceInputUI();
+      }
+    }
+
+    function stopVoiceInputUI() {
+      isListening = false;
+      const btn = document.getElementById('voiceTalkBtn');
+      btn.classList.remove('listening');
+      document.getElementById('voiceTalkIcon').textContent = "🎤";
+      document.getElementById('voiceTalkText').textContent = "눌러서 선생님께 말하기";
+    }
+
+    function handleInputKey(e) {
+      if (e.key === 'Enter') sendUserText();
+    }
+
+    function sendUserText() {
+      const inputEl = document.getElementById('chatTextInput');
+      const text = inputEl.value.trim();
+      if (!text) return;
+      inputEl.value = '';
+      handleUserAnswer(text);
+    }
+
+    // 유저의 대답 처리 & 3단계 따뜻한 대화 전개 (단일 음성 재생)
+    function handleUserAnswer(userAnswer) {
+      addChatMessage('user', userAnswer);
+
+      if (interviewStep === 0) {
+        interviewAnswers.target = userAnswer;
+        interviewStep = 1;
+
+        setTimeout(() => {
+          const aiReply = `어머나, [${userAnswer}]! 정말 멋지고 기특한 생각인걸요!\n선생님이 귀 기울여 듣고 있어요. 그럼 왜 그렇게 생각했는지 그 까닭도 살짝 들려줄 수 있을까요?`;
+          addChatMessage('ai', aiReply);
+          speakTeacherText(aiReply);
+        }, 500);
+
+      } else if (interviewStep === 1) {
+        interviewAnswers.reason = userAnswer;
+        interviewStep = 2;
+
+        setTimeout(() => {
+          const aiReply = `아하, [${userAnswer}]라는 까닭이 있었군요! 아주 훌륭한 이유예요.\n그럼 마지막으로, 그때 우리 친구의 마음은 어땠는지, 혹은 앞으로 어떻게 하고 싶은지 들려주세요.`;
+          addChatMessage('ai', aiReply);
+          speakTeacherText(aiReply);
+        }, 500);
+
+      } else if (interviewStep === 2) {
+        interviewAnswers.feeling = userAnswer;
+        interviewStep = 3;
+
+        setTimeout(() => {
+          const aiCongrats = `참 잘했어요! 정말 대견해요!\n우리 친구가 들려준 예쁜 생각들을 모아서, 선생님이 근사한 발표 원고를 완성해 두었답니다. 아래를 한번 확인해 볼까요?`;
+          addChatMessage('ai', aiCongrats);
+          speakTeacherText(aiCongrats);
+
+          assembleFinalScript();
+        }, 500);
+      } else {
+        setTimeout(() => {
+          const aiExtra = `우리 친구의 생각은 언제 들어도 반짝반짝 빛나요! 이제 아래 버튼을 누르고 진짜 발표 마이크로 멋지게 녹음해 봐요!`;
+          addChatMessage('ai', aiExtra);
+          speakTeacherText(aiExtra);
+        }, 500);
+      }
+    }
+
+    // 최종 3문장 발표 원고 자동 조립
+    function assembleFinalScript() {
+      const assembledText = `제가 오늘 이야기할 것은 [${interviewAnswers.target}]입니다.\n왜냐하면 [${interviewAnswers.reason}]이기 때문입니다.\n그래서 저는 [${interviewAnswers.feeling}]한 기분이 들었습니다. 감사합니다!`;
+
+      document.getElementById('assembledTextBox').innerText = assembledText;
+      const card = document.getElementById('assembledScriptCard');
+      card.classList.add('show');
+      card.scrollIntoView({ behavior: 'smooth' });
+
+      confetti({
+        particleCount: 95,
+        spread: 75,
+        origin: { y: 0.7 }
+      });
+    }
+
+    // 원고를 가지고 오늘의 발표 탭으로 이동
+    function copyAndGoToPractice() {
+      switchTab('practice');
+      alert("선생님과 함께 만든 발표 원고를 마음에 담고,\n빨간 마이크를 누른 뒤 편안하게 발표해 보세요! 🎙️💕");
+      window.scrollTo({ top: 320, behavior: 'smooth' });
+    }
+
+    // -------------------------------------------------------------
+    // 주제 체크리스트 (List & 달성 여부) 렌더링
+    // -------------------------------------------------------------
+    function renderChecklist() {
+      const data = CURRICULUM_DATA.find(d => d.level === currentLevel) || CURRICULUM_DATA[0];
+      const filterContainer = document.getElementById('semesterFilterRow');
+      filterContainer.innerHTML = '';
+
+      // 학기별 필터 버튼 생성
+      data.semesters.forEach(sem => {
+        const btn = document.createElement('button');
+        btn.className = `filter-tag-btn ${sem === currentSemesterFilter ? 'active' : ''}`;
+        btn.textContent = sem;
+        btn.onclick = () => {
+          currentSemesterFilter = sem;
+          renderChecklist();
+        };
+        filterContainer.appendChild(btn);
+      });
+
+      const container = document.getElementById('topicChecklistContainer');
+      container.innerHTML = '';
+
+      const completedMap = JSON.parse(localStorage.getItem('completed_topics_map') || '{}');
+      
+      let totalCompletedInLevel = 0;
+      data.topics.forEach(t => {
+        if (completedMap[t.id]) totalCompletedInLevel++;
+      });
+
+      const totalCount = data.topics.length;
+      const percent = Math.round((totalCompletedInLevel / totalCount) * 100);
+      document.getElementById('progressLevelTitle').textContent = `${data.title} 달성도`;
+      document.getElementById('progressScoreText').textContent = `${totalCompletedInLevel} / ${totalCount} 완료 (${percent}%)`;
+      document.getElementById('progressFillBar').style.width = `${percent}%`;
+
+      const filteredTopics = currentSemesterFilter === "전체" 
+        ? data.topics 
+        : data.topics.filter(t => t.sem === currentSemesterFilter);
+
+      filteredTopics.forEach((t, idx) => {
+        const isDone = !!completedMap[t.id];
+
+        const card = document.createElement('div');
+        card.className = `topic-item-card ${isDone ? 'completed' : ''}`;
+        card.innerHTML = `
+          <div class="topic-item-top">
+            <span class="topic-curriculum-source">${t.source}</span>
+            <span class="topic-status-badge ${isDone ? 'done' : 'pending'}">
+              ${isDone ? '✅ 달성 완료' : '⏳ 도전 대기'}
+            </span>
+          </div>
+          <div class="topic-item-title">${idx + 1}. ${t.question}</div>
+          <div class="topic-item-footer">
+            <span class="topic-completed-date">${isDone ? `완료일: ${completedMap[t.id]}` : '미완료 미션'}</span>
+            <button class="btn-start-topic" onclick="startTopicDirectly('${t.id}')">
+              <span>🎯</span> ${isDone ? '다시 연습하기' : '이 주제로 발표하기'}
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // 탭 전환 (단일 실행 보장)
+    function switchTab(tabId) {
+      stopAllVoices(); // 탭 이동 시 기존 울리던 음성 즉시 끔
+
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+
+      const tabs = ['practice', 'interview', 'checklist', 'stickers', 'history'];
+      const idx = tabs.indexOf(tabId);
+      if (idx !== -1) {
+        document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+        document.getElementById(`tab-${tabId}`).classList.add('active');
+      }
+
+      if (tabId === 'interview') {
+        initInterviewChat(); // 여기서 딱 1번만 단독 실행
+      }
+      if (tabId === 'checklist') renderChecklist();
+      if (tabId === 'stickers') renderStickers();
+      if (tabId === 'history') renderHistory();
+    }
+
+    // 모달 제어
+    function openCurriculumModal() {
+      document.getElementById('curriculumModal').classList.add('open');
+    }
+
+    function closeCurriculumModal() {
+      document.getElementById('curriculumModal').classList.remove('open');
+    }
+
+    function closeModalOnBackdrop(event) {
+      if (event.target === document.getElementById('curriculumModal')) {
+        closeCurriculumModal();
+      }
+    }
+
+    // 교육과정 기준표 전체 로드맵 렌더링
+    function renderCurriculumRoadmap() {
+      const container = document.getElementById('curriculumRoadmapList');
+      container.innerHTML = '';
+
+      CURRICULUM_DATA.forEach(item => {
+        const card = document.createElement('div');
+        const isCurrent = item.level === currentLevel;
+        card.className = `roadmap-card ${isCurrent ? 'current' : ''}`;
+        card.innerHTML = `
+          <div class="roadmap-badge-line">
+            <span class="roadmap-level-tag">${item.title}</span>
+            <span class="roadmap-grade">${item.targetGrade}</span>
+          </div>
+          <div class="roadmap-std-code">교육부 성취기준: ${item.stdCode}</div>
+          <div class="roadmap-desc"><strong>🎯 목표:</strong> ${item.stdDesc}</div>
+          <div class="roadmap-desc"><strong>📐 생각 모델:</strong> ${item.frameworkName}</div>
+          <div class="roadmap-desc"><strong>📚 수록 주제 수:</strong> 교과 연계 공식 주제 총 ${item.topics.length}개 탑재</div>
+          <div class="roadmap-coaching">
+            💡 <strong>부모 코칭 팁:</strong> ${item.coachingTip}
+          </div>
+          ${!isCurrent ? `<button onclick="selectLevel(${item.level}); closeCurriculumModal();" style="margin-top:10px; background:#FFA000; border:none; color:white; padding:6px 14px; border-radius:12px; font-family:'Jua',sans-serif; font-size:12px; cursor:pointer;">이 레벨로 연습하기</button>` : `<div style="margin-top:8px; font-family:'Jua',sans-serif; color:#E65100; font-size:13px;">✅ 현재 선택된 연습 레벨입니다</div>`}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // 녹음 토글
+    async function toggleRecording() {
+      if (!isRecording) {
+        startRecording();
+      } else {
+        stopRecording();
+      }
+    }
+
+    // 녹음 시작
+    async function startRecording() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data.size > 0) audioChunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = async () => {
+          recordedBlob = new Blob(audioChunks, { type: 'audio/webm' });
+          const audioUrl = URL.createObjectURL(recordedBlob);
+          document.getElementById('audioPlayer').src = audioUrl;
+
+          const reader = new FileReader();
+          reader.readAsDataURL(recordedBlob);
+          reader.onloadend = () => {
+            recordedBase64 = reader.result;
+          };
+
+          document.getElementById('playbackBox').classList.add('show');
+          document.getElementById('statusMsg').textContent = "🎉 녹음 완료! 내 목소리를 들어보고 스티커를 받으세요.";
+        };
+
+        mediaRecorder.start();
+        isRecording = true;
+        secondsElapsed = 0;
+        updateTimerDisplay();
+
+        timerInterval = setInterval(() => {
+          secondsElapsed++;
+          updateTimerDisplay();
+        }, 1000);
+
+        document.getElementById('recordBtn').classList.add('recording');
+        document.getElementById('recordIcon').textContent = "⏹️";
+        document.getElementById('statusMsg').textContent = "🎙️ 잘하고 있어! 편안하게 다 말한 후 네모(정지)를 눌러줘.";
+        document.getElementById('playbackBox').classList.remove('show');
+
+      } catch (err) {
+        console.error(err);
+        alert("마이크 사용 권한이 필요합니다. 브라우저 설정에서 마이크 접근을 허용해 주세요!");
+      }
+    }
+
+    // 녹음 정지
+    function stopRecording() {
+      if (mediaRecorder && isRecording) {
+        mediaRecorder.stop();
+        mediaRecorder.stream.getTracks().forEach(t => t.stop());
+        clearInterval(timerInterval);
+        isRecording = false;
+
+        document.getElementById('recordBtn').classList.remove('recording');
+        document.getElementById('recordIcon').textContent = "🎙️";
+      }
+    }
+
+    function updateTimerDisplay() {
+      const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+      const secs = String(secondsElapsed % 60).padStart(2, '0');
+      document.getElementById('timerText').textContent = `${mins}:${secs}`;
+    }
+
+    // 발표 저장 & 스티커 보상 & 체크리스트 자동 달성 완료
+    function savePresentation() {
+      if (!recordedBase64) {
+        alert("녹음된 음성이 없습니다.");
+        return;
+      }
+
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+
+      let unlockedCount = parseInt(localStorage.getItem('sticker_unlocked_count') || '0', 10);
+      if (unlockedCount < ALL_STICKERS.length) {
+        unlockedCount++;
+        localStorage.setItem('sticker_unlocked_count', unlockedCount);
+      }
+      const assignedSticker = ALL_STICKERS[(unlockedCount - 1) % ALL_STICKERS.length];
+
+      const curData = CURRICULUM_DATA.find(d => d.level === currentLevel) || CURRICULUM_DATA[0];
+      const curTopicObj = curData.topics[currentTopicIndex];
+      const todayStr = new Date().toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' });
+
+      const completedMap = JSON.parse(localStorage.getItem('completed_topics_map') || '{}');
+      completedMap[curTopicObj.id] = todayStr;
+      localStorage.setItem('completed_topics_map', JSON.stringify(completedMap));
+
+      const historyItem = {
+        id: Date.now(),
+        date: new Date().toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' }),
+        levelTitle: curData.title,
+        source: curTopicObj.source,
+        topic: curTopicObj.question,
+        duration: document.getElementById('timerText').textContent,
+        stickerIcon: assignedSticker.icon,
+        stickerName: assignedSticker.name,
+        audioData: recordedBase64
+      };
+
+      const history = JSON.parse(localStorage.getItem('presentation_history') || '[]');
+      history.unshift(historyItem);
+      localStorage.setItem('presentation_history', JSON.stringify(history));
+
+      alert(`참 잘했어요! 🎉\n[${assignedSticker.icon} ${assignedSticker.name}] 스티커를 받고,\n오늘의 주제 미션을 달성(Check ✅)했습니다!`);
+
+      document.getElementById('playbackBox').classList.remove('show');
+      secondsElapsed = 0;
+      updateTimerDisplay();
+      document.getElementById('statusMsg').textContent = "빨간 마이크를 누르면 녹음이 시작돼요!";
+
+      switchTab('checklist');
+    }
+
+    // 스티커 렌더링
+    function renderStickers() {
+      const unlockedCount = parseInt(localStorage.getItem('sticker_unlocked_count') || '0', 10);
+      const container = document.getElementById('stickersGrid');
+      container.innerHTML = '';
+
+      ALL_STICKERS.forEach((stk, idx) => {
+        const isUnlocked = idx < unlockedCount;
+        const slot = document.createElement('div');
+        slot.className = `sticker-slot ${isUnlocked ? 'unlocked' : ''}`;
+        slot.innerHTML = `
+          <div class="sticker-icon">${stk.icon}</div>
+          <div class="sticker-name">${isUnlocked ? stk.name : '미션 완주 시 획득!'}</div>
+        `;
+        container.appendChild(slot);
+      });
+    }
+
+    // 히스토리 렌더링
+    function renderHistory() {
+      const history = JSON.parse(localStorage.getItem('presentation_history') || '[]');
+      const container = document.getElementById('historyList');
+      container.innerHTML = '';
+
+      if (history.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px 20px; color: #90A4AE;">
+            <div style="font-size: 40px;">🌱</div>
+            <p style="font-family:'Jua',sans-serif; font-size:16px; margin-top:8px;">아직 녹음된 발표가 없어요.<br>첫 번째 발표를 하고 타임캡슐을 채워보세요!</p>
+          </div>
+        `;
+        return;
+      }
+
+      history.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'history-card';
+        card.innerHTML = `
+          <div class="history-header">
+            <span class="history-date">${item.date} (${item.duration})</span>
+            <span class="history-level">${item.levelTitle || 'Lv.1'}</span>
+          </div>
+          <div style="font-size:11px; color:#283593; font-weight:600;">${item.source || '공식 교과 제재'}</div>
+          <div class="history-topic">Q. ${item.topic}</div>
+          <audio controls src="${item.audioData}" style="margin-top:6px;"></audio>
+        `;
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
