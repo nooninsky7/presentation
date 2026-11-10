@@ -757,6 +757,33 @@
       gap: 8px;
     }
 
+    .parent-talk-complete-btn {
+      background: linear-gradient(135deg, #FFA726, #FB8C00);
+      color: #FFFFFF;
+      border: 2px solid #F57C00;
+      padding: 12px 20px;
+      border-radius: 22px;
+      font-family: 'Jua', sans-serif;
+      font-size: 15.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(251, 140, 0, 0.28);
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 440px;
+    }
+    .parent-talk-complete-btn:hover {
+      background: linear-gradient(135deg, #FB8C00, #F57C00);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(251, 140, 0, 0.38);
+    }
+    .parent-talk-complete-btn:active {
+      transform: scale(0.98);
+    }
+
     /* ------------------------------------------- */
     /* AI 인터뷰 (자연스러운 단일 여성 선생님 모드) 전용 스타일 */
     /* ------------------------------------------- */
@@ -1797,7 +1824,7 @@
             </button>
           </div>
 
-          <div class="status-msg" id="statusMsg">빨간 마이크를 누르면 3초 워밍업 후 녹음이 시작돼요!</div>
+          <div class="status-msg" id="statusMsg">빨간 마이크를 누르면 차분한 워밍업 후 녹음이 시작돼요!</div>
 
           <!-- 사자 목소리 크기(볼륨) 실시간 게이지 (언제든 켜고 끌 수 있음) -->
           <div class="volume-meter-card" id="volumeMeterCard">
@@ -1819,6 +1846,16 @@
             <div class="volume-feedback-msg" id="volumeFeedbackMsg">
               마이크에 편안하게 소리내어 말해 보세요!
             </div>
+          </div>
+
+          <!-- 녹음 없이 부모님과 대화 달성 완료 버튼 -->
+          <div style="margin-top: 18px; padding-top: 14px; border-top: 1.5px dashed #B2DFDB; display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%;">
+            <div style="font-size: 12.5px; color: #455A64; font-weight: 500;">
+              💡 녹음 없이 부모님과 마주보고 이야기 나누셨나요?
+            </div>
+            <button class="parent-talk-complete-btn" onclick="completeWithoutRecording()">
+              <span>👨‍👩‍👧</span> 부모님과 말하기 완료! (스티커 & 달력 도장 받기)
+            </button>
           </div>
 
           <!-- 녹음 완료 후 재생 & 저장 -->
@@ -2867,7 +2904,7 @@
 
         warmupTimer = setTimeout(() => {
           showStep(idx + 1);
-        }, 1000);
+        }, 2000); // 각 단계를 천천히 2초씩 나타내어 차분하게 긴장을 풀 수 있도록 설정
       }
 
       showStep(0);
@@ -3302,10 +3339,69 @@
             <span>받은 스티커:</span>
             <span>${item.stickerIcon || '⭐'} ${item.stickerName || '참 잘했어요'}</span>
           </div>
-          ${item.audioData ? `<audio controls src="${item.audioData}" style="margin-top:6px; height:36px;"></audio>` : ''}
+          ${item.audioData ? `<audio controls src="${item.audioData}" style="margin-top:6px; height:36px;"></audio>` : `<div style="font-size:11.5px; color:#5D4037; margin-top:6px; background:#FFF8E1; padding:6px 10px; border-radius:10px; font-weight:500;">👨‍👩‍👧 부모님과 마주보고 이야기하며 연습 완료!</div>`}
         `;
         listContainer.appendChild(card);
       });
+    }
+
+    // 부모님과 마주보고 말하기 완료 (녹음 없이 달성 & 스티커 & 달력 도장 받기)
+    function completeWithoutRecording() {
+      const curData = CURRICULUM_DATA.find(d => d.level === currentLevel) || CURRICULUM_DATA[0];
+      const curTopicObj = curData.topics[currentTopicIndex];
+
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+
+      let unlockedCount = parseInt(localStorage.getItem('sticker_unlocked_count') || '0', 10);
+      if (unlockedCount < ALL_STICKERS.length) {
+        unlockedCount++;
+        localStorage.setItem('sticker_unlocked_count', unlockedCount);
+      }
+      const assignedSticker = ALL_STICKERS[(unlockedCount - 1) % ALL_STICKERS.length];
+
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const dateKey = `${year}-${month}-${day}`;
+      const todayStr = `${now.getMonth() + 1}. ${now.getDate()}.`;
+
+      const completedMap = JSON.parse(localStorage.getItem('completed_topics_map') || '{}');
+      completedMap[curTopicObj.id] = todayStr;
+      localStorage.setItem('completed_topics_map', JSON.stringify(completedMap));
+
+      const historyItem = {
+        id: Date.now(),
+        dateKey: dateKey,
+        timestamp: Date.now(),
+        date: now.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' }),
+        level: currentLevel,
+        levelTitle: curData.title,
+        source: curTopicObj.source,
+        topic: curTopicObj.question,
+        duration: "부모님과 대화",
+        stickerIcon: assignedSticker.icon,
+        stickerName: assignedSticker.name,
+        audioData: null,
+        isParentTalk: true
+      };
+
+      const history = JSON.parse(localStorage.getItem('presentation_history') || '[]');
+      history.unshift(historyItem);
+      localStorage.setItem('presentation_history', JSON.stringify(history));
+
+      alert(`멋져요! 👏\n부모님과 눈을 맞추며 멋지게 말하기를 완주했습니다!\n[${assignedSticker.icon} ${assignedSticker.name}] 스티커를 받고,\n루틴 달력에 오늘의 달성 도장이 콕 찍혔습니다! 🌟`);
+
+      document.getElementById('playbackBox').classList.remove('show');
+      secondsElapsed = 0;
+      updateTimerDisplay();
+      document.getElementById('statusMsg').textContent = "빨간 마이크를 누르면 차분한 워밍업 후 녹음이 시작돼요!";
+
+      switchTab('calendar');
     }
 
     // 발표 저장 & 스티커 보상 & 체크리스트 자동 달성 완료
@@ -3414,7 +3510,7 @@
           </div>
           <div style="font-size:11px; color:#283593; font-weight:600;">${item.source || '공식 교과 제재'}</div>
           <div class="history-topic">Q. ${item.topic}</div>
-          <audio controls src="${item.audioData}" style="margin-top:6px;"></audio>
+          ${item.audioData ? `<audio controls src="${item.audioData}" style="margin-top:6px;"></audio>` : `<div style="font-size:12px; color:#5D4037; margin-top:6px; background:#FFF8E1; padding:6px 10px; border-radius:10px; font-weight:500;">👨‍👩‍👧 부모님과 마주보고 이야기하며 연습 완료!</div>`}
         `;
         container.appendChild(card);
       });
