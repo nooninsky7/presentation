@@ -58,56 +58,73 @@
       margin-bottom: 30px;
     }
 
-    /* 헤더 */
+    /* 슬림 가로형 컴팩트 헤더 */
     header {
       background: linear-gradient(135deg, #FFD54F, #FFB300);
-      padding: 22px 20px 18px;
-      text-align: center;
+      padding: 10px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       position: relative;
     }
 
-    .header-mascot {
-      font-size: 44px;
-      display: inline-block;
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .header-mascot-inline {
+      font-size: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       animation: bounce 2s infinite ease-in-out;
+      background: rgba(255, 255, 255, 0.45);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s;
+    }
+    .header-mascot-inline:hover {
+      transform: scale(1.1);
+    }
+
+    .header-titles {
+      display: flex;
+      flex-direction: column;
     }
 
     h1 {
       font-family: 'Jua', sans-serif;
-      font-size: 26px;
+      font-size: 21px;
       color: #4E342E;
-      letter-spacing: 0.5px;
-      margin-top: 2px;
+      letter-spacing: 0.3px;
+      line-height: 1.2;
+      margin: 0;
     }
 
     .subtitle {
-      font-size: 13px;
+      font-size: 11.5px;
       color: #6D4C41;
       font-weight: 600;
-      margin-top: 3px;
+      margin-top: 1px;
     }
 
-    /* 레벨 선택기 */
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+
+    /* 컴팩트 레벨 선택기 */
     .level-selector-wrapper {
       background: #FFF8E1;
       border-bottom: 2px solid #FFE082;
-      padding: 12px 14px 10px;
-    }
-
-    .level-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .level-header-title {
-      font-family: 'Jua', sans-serif;
-      font-size: 14px;
-      color: #6D4C41;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      padding: 6px 14px 6px;
     }
 
     .curriculum-link-btn {
@@ -115,8 +132,8 @@
       border: 1.5px solid #FFA000;
       color: #E65100;
       font-family: 'Jua', sans-serif;
-      font-size: 12.5px;
-      padding: 4px 12px;
+      font-size: 12px;
+      padding: 5px 12px;
       border-radius: 14px;
       cursor: pointer;
       display: flex;
@@ -124,6 +141,7 @@
       gap: 5px;
       box-shadow: 0 2px 6px rgba(255, 160, 0, 0.15);
       transition: all 0.2s;
+      white-space: nowrap;
     }
 
     .curriculum-link-btn:hover {
@@ -135,8 +153,8 @@
       display: flex;
       gap: 6px;
       overflow-x: auto;
-      padding-bottom: 4px;
       scrollbar-width: none;
+      justify-content: center;
     }
     .level-pills::-webkit-scrollbar {
       display: none;
@@ -144,23 +162,23 @@
 
     .level-pill {
       flex: 0 0 auto;
-      padding: 6px 12px;
-      border-radius: 16px;
-      border: 2px solid #FFE082;
+      padding: 4px 10px;
+      border-radius: 14px;
+      border: 1.5px solid #FFE082;
       background: #FFFFFF;
       font-family: 'Jua', sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       color: #795548;
       cursor: pointer;
       transition: all 0.2s;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      min-width: 90px;
+      gap: 5px;
+      min-width: 0;
     }
 
     .level-pill .stage-name {
-      font-size: 11px;
+      font-size: 10px;
       color: #A1887F;
     }
 
@@ -168,7 +186,7 @@
       background: #FFA000;
       border-color: #FF8F00;
       color: #FFFFFF;
-      box-shadow: 0 3px 8px rgba(255, 160, 0, 0.35);
+      box-shadow: 0 2px 6px rgba(255, 160, 0, 0.3);
     }
     .level-pill.active .stage-name {
       color: #FFF8E1;
@@ -1816,24 +1834,24 @@
 <body>
 
   <div class="app-container">
-    <!-- 헤더 -->
+    <!-- 슬림 가로형 컴팩트 헤더 -->
     <header>
-      <div class="header-mascot">🐿️</div>
-      <h1>말랑이의 말하기 탐험대</h1>
-      <p class="subtitle">다정한 선생님 AI 인터뷰 & 5단계 생각 스피치 체계</p>
-    </header>
-
-    <!-- 5단계 레벨 선택기 -->
-    <div class="level-selector-wrapper">
-      <div class="level-header">
-        <span class="level-header-title">
-          <span>🎯</span> 성장 단계 선택
-        </span>
+      <div class="header-left">
+        <span class="header-mascot-inline" id="headerMascot" onclick="cycleMascotCharacter()" title="클릭하면 사자, 토끼, 다람쥐 캐릭터를 바꿀 수 있어요!">🦁</span>
+        <div class="header-titles">
+          <h1>말랑이의 말하기 탐험대</h1>
+          <p class="subtitle">다정한 AI 인터뷰 & 5단계 초등 국어 스피치</p>
+        </div>
+      </div>
+      <div class="header-right">
         <button class="curriculum-link-btn" onclick="openCurriculumModal()">
           <span>📖</span> 교육과정 기준표 보기
         </button>
       </div>
+    </header>
 
+    <!-- 컴팩트 레벨 선택기 -->
+    <div class="level-selector-wrapper">
       <div class="level-pills" id="levelPills">
         <!-- JS로 레벨 버튼 렌더링 -->
       </div>
@@ -2460,6 +2478,32 @@
       }
     }
 
+    // 캐릭터 마스코트 옵션
+    const MASCOT_OPTIONS = [
+      { icon: '🦁', name: '자신감 아기 사자' },
+      { icon: '🐰', name: '귀 쫑긋 토끼' },
+      { icon: '🐿️', name: '도토리 다람쥐' }
+    ];
+    let currentMascotIdx = 0;
+
+    function initMascot() {
+      const saved = localStorage.getItem('preferred_mascot');
+      if (saved) {
+        const found = MASCOT_OPTIONS.findIndex(m => m.icon === saved);
+        if (found !== -1) currentMascotIdx = found;
+      }
+      const el = document.getElementById('headerMascot');
+      if (el) el.textContent = MASCOT_OPTIONS[currentMascotIdx].icon;
+    }
+
+    function cycleMascotCharacter() {
+      currentMascotIdx = (currentMascotIdx + 1) % MASCOT_OPTIONS.length;
+      const mascot = MASCOT_OPTIONS[currentMascotIdx];
+      const el = document.getElementById('headerMascot');
+      if (el) el.textContent = mascot.icon;
+      localStorage.setItem('preferred_mascot', mascot.icon);
+    }
+
     let currentLevel = parseInt(localStorage.getItem('current_user_level') || '1', 10);
     let currentSemesterFilter = "전체";
     let currentTopicIndex = 0;
@@ -2484,6 +2528,7 @@
 
     // 초기 실행
     window.addEventListener('DOMContentLoaded', () => {
+      initMascot();
       renderLevelPills();
       loadLevel(currentLevel);
       renderCurriculumRoadmap();
