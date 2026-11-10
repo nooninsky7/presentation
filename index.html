@@ -529,6 +529,195 @@
       min-height: 24px;
     }
 
+    /* ------------------------------------------- */
+    /* 3초 발표 워밍업 루틴 스타일 */
+    /* ------------------------------------------- */
+    .warmup-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 16px;
+    }
+    .warmup-modal.active {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+    .warmup-card {
+      background: linear-gradient(135deg, #FFFDE7, #FFF8E1);
+      border: 3.5px solid #FFB300;
+      border-radius: 28px;
+      padding: 28px 24px 22px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      animation: popStamp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .warmup-countdown-circle {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FFB300, #FF8F00);
+      color: white;
+      font-family: 'Jua', sans-serif;
+      font-size: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(255, 143, 0, 0.4);
+    }
+    .warmup-icon {
+      font-size: 48px;
+      margin: 2px 0;
+    }
+    .warmup-step-title {
+      font-family: 'Jua', sans-serif;
+      font-size: 20px;
+      color: #E65100;
+    }
+    .warmup-step-sub {
+      font-size: 13.5px;
+      color: #6D4C41;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .warmup-skip-btn {
+      margin-top: 6px;
+      background: #FFFFFF;
+      border: 1.5px solid #FFE082;
+      color: #FF8F00;
+      padding: 6px 16px;
+      border-radius: 14px;
+      font-family: 'Jua', sans-serif;
+      font-size: 12.5px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .warmup-skip-btn:hover {
+      background: #FFF3E0;
+    }
+
+    /* ------------------------------------------- */
+    /* 사자 목소리 크기(볼륨) 게이지 스타일 */
+    /* ------------------------------------------- */
+    .volume-meter-card {
+      margin-top: 14px;
+      background: #FFFFFF;
+      border: 2px solid #FFE082;
+      border-radius: 18px;
+      padding: 12px 14px;
+      box-shadow: 0 4px 12px rgba(255, 179, 0, 0.1);
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .volume-meter-card.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+    .volume-meter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Jua', sans-serif;
+      font-size: 13.5px;
+      color: #E65100;
+    }
+    .volume-meter-toggle-label {
+      font-size: 11px;
+      color: #8D6E63;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .volume-meter-track {
+      width: 100%;
+      height: 20px;
+      background: #F5F5F5;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      border: 1.5px solid #EEEEEE;
+    }
+    .volume-meter-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #81C784 0%, #FFD54F 60%, #FF7043 100%);
+      border-radius: 12px;
+      transition: width 0.08s ease-out;
+    }
+    .volume-levels-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      color: #90A4AE;
+      padding: 0 2px;
+    }
+    .volume-levels-row span.current-level {
+      color: #E65100;
+      font-weight: 700;
+    }
+    .volume-feedback-msg {
+      font-family: 'Jua', sans-serif;
+      font-size: 13px;
+      text-align: center;
+      color: #2E7D32;
+      background: #F1F8E9;
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px dashed #C8E6C9;
+    }
+
+    /* 3단계 사다리 스텝 바 */
+    .ladder-breadcrumb-box {
+      margin-bottom: 12px;
+      background: #E1F5FE;
+      border: 1.5px solid #81D4FA;
+      border-radius: 14px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 4px;
+    }
+    .ladder-step-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-family: 'Jua', sans-serif;
+      font-size: 11.5px;
+      color: #0277BD;
+    }
+    .ladder-step-num {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: #0288D1;
+      color: white;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ladder-arrow {
+      color: #B0BEC5;
+      font-size: 10px;
+    }
+
     .playback-box {
       margin-top: 16px;
       padding: 14px;
@@ -1590,6 +1779,16 @@
         <!-- 3단계: 녹음 & 발표 -->
         <div class="fun-card record-card">
           <span class="badge-step" style="background:#0288D1;">3단계: 소리내어 말해봐요</span>
+          
+          <!-- 사다리식 3단계 순서 안내 바 -->
+          <div class="ladder-breadcrumb-box">
+            <div class="ladder-step-item"><span class="ladder-step-num">1</span> 시작(소개)</div>
+            <span class="ladder-arrow">❯</span>
+            <div class="ladder-step-item"><span class="ladder-step-num">2</span> 이유(까닭)</div>
+            <span class="ladder-arrow">❯</span>
+            <div class="ladder-step-item"><span class="ladder-step-num">3</span> 끝(느낌)</div>
+          </div>
+
           <div class="timer-display" id="timerText">00:00</div>
           
           <div class="record-btn-wrapper">
@@ -1598,7 +1797,29 @@
             </button>
           </div>
 
-          <div class="status-msg" id="statusMsg">빨간 마이크를 누르면 녹음이 시작돼요!</div>
+          <div class="status-msg" id="statusMsg">빨간 마이크를 누르면 3초 워밍업 후 녹음이 시작돼요!</div>
+
+          <!-- 사자 목소리 크기(볼륨) 실시간 게이지 (언제든 켜고 끌 수 있음) -->
+          <div class="volume-meter-card" id="volumeMeterCard">
+            <div class="volume-meter-header">
+              <span>🦁 사자 목소리 게이지 (실시간 크기)</span>
+              <label class="volume-meter-toggle-label">
+                <input type="checkbox" id="volumeMeterToggle" checked onchange="toggleVolumeMeterUI(this.checked)">
+                <span>게이지 켜기</span>
+              </label>
+            </div>
+            <div class="volume-meter-track">
+              <div class="volume-meter-bar" id="volumeMeterBar"></div>
+            </div>
+            <div class="volume-levels-row">
+              <span id="levelAnt">🐜 개미(작아요)</span>
+              <span id="levelSquirrel">🐿️ 다람쥐(좋아요)</span>
+              <span id="levelLion">🦁 사자(우렁차요!)</span>
+            </div>
+            <div class="volume-feedback-msg" id="volumeFeedbackMsg">
+              마이크에 편안하게 소리내어 말해 보세요!
+            </div>
+          </div>
 
           <!-- 녹음 완료 후 재생 & 저장 -->
           <div class="playback-box" id="playbackBox">
@@ -1775,6 +1996,17 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- 3초 발표 워밍업 루틴 모달 -->
+  <div class="warmup-modal" id="warmupModal">
+    <div class="warmup-card">
+      <div class="warmup-countdown-circle" id="warmupCount">3</div>
+      <div class="warmup-icon" id="warmupIcon">🧘</div>
+      <div class="warmup-step-title" id="warmupTitle">허리 펴고 바른 자세!</div>
+      <div class="warmup-step-sub" id="warmupSub">자신감 있는 목소리는 바른 자세에서 나와요~</div>
+      <button class="warmup-skip-btn" onclick="skipWarmupAndStart()">바로 녹음 시작하기 ❯</button>
     </div>
   </div>
 
@@ -2579,17 +2811,78 @@
       });
     }
 
+    // -------------------------------------------------------------
+    // 3초 발표 워밍업 루틴 & 사자 목소리 볼륨 미터
+    // -------------------------------------------------------------
+    let warmupTimer = null;
+    let isWarmingUp = false;
+    let audioContext = null;
+    let analyser = null;
+    let microphoneSource = null;
+    let volumeAnimationId = null;
+    let showVolumeMeter = true;
+
     // 녹음 토글
     async function toggleRecording() {
       if (!isRecording) {
-        startRecording();
+        if (isWarmingUp) return;
+        runWarmupCountdown(() => actualStartRecording());
       } else {
         stopRecording();
       }
     }
 
-    // 녹음 시작
-    async function startRecording() {
+    // 3초 워밍업 카운트다운
+    function runWarmupCountdown(onComplete) {
+      isWarmingUp = true;
+      const modal = document.getElementById('warmupModal');
+      const countEl = document.getElementById('warmupCount');
+      const iconEl = document.getElementById('warmupIcon');
+      const titleEl = document.getElementById('warmupTitle');
+      const subEl = document.getElementById('warmupSub');
+
+      modal.classList.add('active');
+
+      const steps = [
+        { count: 3, icon: "🧘", title: "1단계: 허리 펴고 바른 자세!", sub: "자신감 있는 목소리는 바른 자세에서 나와요~" },
+        { count: 2, icon: "💨", title: "2단계: 숨 한번 크게 들이쉬고~", sub: "씁-하! 가슴을 활짝 열고 숨을 채워봐요." },
+        { count: 1, icon: "😊", title: "3단계: 방긋 웃으며 출발!", sub: "말랑이와 함께 멋지게 소리내어 말해봐요!" }
+      ];
+
+      let currentStepIdx = 0;
+
+      function showStep(idx) {
+        if (idx >= steps.length) {
+          modal.classList.remove('active');
+          isWarmingUp = false;
+          if (onComplete) onComplete();
+          return;
+        }
+
+        const s = steps[idx];
+        countEl.textContent = s.count;
+        iconEl.textContent = s.icon;
+        titleEl.textContent = s.title;
+        subEl.textContent = s.sub;
+
+        warmupTimer = setTimeout(() => {
+          showStep(idx + 1);
+        }, 1000);
+      }
+
+      showStep(0);
+    }
+
+    function skipWarmupAndStart() {
+      if (warmupTimer) clearTimeout(warmupTimer);
+      const modal = document.getElementById('warmupModal');
+      modal.classList.remove('active');
+      isWarmingUp = false;
+      actualStartRecording();
+    }
+
+    // 실제 녹음 시작
+    async function actualStartRecording() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         mediaRecorder = new MediaRecorder(stream);
@@ -2600,6 +2893,7 @@
         };
 
         mediaRecorder.onstop = async () => {
+          stopVolumeMeter();
           recordedBlob = new Blob(audioChunks, { type: 'audio/webm' });
           const audioUrl = URL.createObjectURL(recordedBlob);
           document.getElementById('audioPlayer').src = audioUrl;
@@ -2626,8 +2920,14 @@
 
         document.getElementById('recordBtn').classList.add('recording');
         document.getElementById('recordIcon').textContent = "⏹️";
-        document.getElementById('statusMsg').textContent = "🎙️ 잘하고 있어! 편안하게 다 말한 후 네모(정지)를 눌러줘.";
+        document.getElementById('statusMsg').textContent = "🎙️ 잘하고 있어! 다 말한 후 네모(정지)를 눌러줘.";
         document.getElementById('playbackBox').classList.remove('show');
+
+        // 사자 목소리 게이지 활성화
+        if (showVolumeMeter) {
+          document.getElementById('volumeMeterCard').classList.add('active');
+          startVolumeMeter(stream);
+        }
 
       } catch (err) {
         console.error(err);
@@ -2645,6 +2945,100 @@
 
         document.getElementById('recordBtn').classList.remove('recording');
         document.getElementById('recordIcon').textContent = "🎙️";
+        stopVolumeMeter();
+        document.getElementById('volumeMeterCard').classList.remove('active');
+      }
+    }
+
+    // 사자 목소리 크기(볼륨) 실시간 측정기
+    function startVolumeMeter(stream) {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        audioContext = new AudioContext();
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256;
+        analyser.smoothingTimeConstant = 0.6;
+
+        microphoneSource = audioContext.createMediaStreamSource(stream);
+        microphoneSource.connect(analyser);
+
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+        function checkLevel() {
+          if (!isRecording) return;
+          analyser.getByteFrequencyData(dataArray);
+
+          let sum = 0;
+          for (let i = 0; i < dataArray.length; i++) {
+            sum += dataArray[i];
+          }
+          let avg = sum / dataArray.length; // 0 ~ 255
+          let percent = Math.min(100, Math.round((avg / 55) * 100));
+
+          renderVolumeUI(percent);
+          volumeAnimationId = requestAnimationFrame(checkLevel);
+        }
+        checkLevel();
+      } catch (e) {
+        console.warn("볼륨 미터 초기화 예외:", e);
+      }
+    }
+
+    function stopVolumeMeter() {
+      if (volumeAnimationId) cancelAnimationFrame(volumeAnimationId);
+      volumeAnimationId = null;
+      if (audioContext && audioContext.state !== 'closed') {
+        audioContext.close().catch(() => {});
+      }
+      audioContext = null;
+      analyser = null;
+      microphoneSource = null;
+    }
+
+    function renderVolumeUI(percent) {
+      const bar = document.getElementById('volumeMeterBar');
+      const msg = document.getElementById('volumeFeedbackMsg');
+      const ant = document.getElementById('levelAnt');
+      const squirrel = document.getElementById('levelSquirrel');
+      const lion = document.getElementById('levelLion');
+
+      if (!bar) return;
+      bar.style.width = `${percent}%`;
+
+      if (ant && squirrel && lion && msg) {
+        ant.classList.remove('current-level');
+        squirrel.classList.remove('current-level');
+        lion.classList.remove('current-level');
+
+        if (percent < 20) {
+          ant.classList.add('current-level');
+          msg.textContent = "🐜 속닥속닥 개미 목소리 (조금만 더 크게 해볼까요?)";
+          msg.style.color = "#795548";
+          msg.style.background = "#EFEBE9";
+        } else if (percent < 60) {
+          squirrel.classList.add('current-level');
+          msg.textContent = "🐿️ 도란도란 다람쥐 목소리! (아주 좋아요~ 또박또박)";
+          msg.style.color = "#E65100";
+          msg.style.background = "#FFF8E1";
+        } else {
+          lion.classList.add('current-level');
+          msg.textContent = "🦁 우렁찬 사자 목소리! (와! 교실 맨 뒤까지 들려요 👑)";
+          msg.style.color = "#1B5E20";
+          msg.style.background = "#E8F5E9";
+        }
+      }
+    }
+
+    function toggleVolumeMeterUI(checked) {
+      showVolumeMeter = checked;
+      const card = document.getElementById('volumeMeterCard');
+      if (!checked) {
+        card.classList.remove('active');
+        stopVolumeMeter();
+      } else if (isRecording && mediaRecorder && mediaRecorder.stream) {
+        card.classList.add('active');
+        startVolumeMeter(mediaRecorder.stream);
       }
     }
 
