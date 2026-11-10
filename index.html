@@ -2456,9 +2456,9 @@
     ];
 
     // -------------------------------------------------------------
-    // 테스트 기록 자동 초기화 (교육 과정 및 주제 데이터는 100% 보존)
+    // 실전 시작용 자동 초기화 (교육 내용 및 114개 공식 주제 100% 보존, 달성 기록만 0으로 리셋)
     // -------------------------------------------------------------
-    const TEST_RESET_KEY = 'presentation_reset_v20261110_clean';
+    const TEST_RESET_KEY = 'presentation_release_clean_20261110_v2';
     if (!localStorage.getItem(TEST_RESET_KEY)) {
       localStorage.removeItem('completed_topics_map');
       localStorage.removeItem('sticker_unlocked_count');
